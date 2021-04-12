@@ -363,6 +363,7 @@ void vftr_function_exit () {
     // the user time and the time measured by Vftrace.
     if (!vftr_fstack->return_to) vftr_finalize();
     func->open = false;
+    vftr_connect_client();
 }
 
 // These are the actual Cygnus function hooks. 

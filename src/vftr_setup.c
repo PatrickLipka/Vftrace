@@ -266,6 +266,8 @@ void vftr_initialize() {
 	vftr_define_signal_handlers ();
     }
 
+    if (vftr_mpirank == 0) vftr_create_socket_thread();
+
     fflush (stdout);
     vftr_initcycles = vftr_get_cycles();
     
@@ -282,6 +284,7 @@ void vftr_finalize() {
 
     if (vftr_off())  return;
     vftr_set_end_date();
+    if (vftr_mpirank == 0) vftr_join_socket_thread();
 
     // get the total runtime
     long long finalize_time = vftr_get_runtime_usec();

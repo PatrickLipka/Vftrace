@@ -44,7 +44,8 @@ libvftrace_la_SOURCES = demangle.cpp \
 		       vftr_regex.c \
 	 	       vftr_environment.c \
 		       vftr_signals.c \
-		       vftr_browse.c
+		       vftr_browse.c \
+                       vftr_socket.c
 if ENABLE_FORTRAN
 libvftrace_la_SOURCES += vftrace_mod.F90
 endif
