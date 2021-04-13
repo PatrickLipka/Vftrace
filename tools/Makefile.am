@@ -3,7 +3,8 @@ bin_PROGRAMS = vftrace_vfd_dump \
 	       vftrace_mpi_table_crosscheck \
 	       vftrace_mpi_stack_crosscheck \
 	       vftrace_filter_stacks \
-	       vftrace_diff_profiles
+	       vftrace_diff_profiles \
+               vflive
 
 vftrace_mpi_table_crosscheck_SOURCES = vftrace_mpi_table_crosscheck.c
 vftrace_mpi_stack_crosscheck_SOURCES = vftrace_mpi_stack_crosscheck.c
@@ -25,6 +26,10 @@ vftrace_filter_stacks_LDFLAGS = -L${top_builddir}/src/.libs -lvftrace -lm
 vftrace_diff_profiles_SOURCES = vftrace_diff_profiles.c
 vftrace_diff_profiles_CFLAGS = -I${srcdir}/../src
 vftrace_diff_profiles_LDFLAGS = -L${top_builddir}/src/.libs -lvftrace -lm
+
+vflive_SOURCES = vflive.c
+vflive_CFLAGS = -I${srcdir}/../src
+vflive_LDFLAGS = -L${top_builddir}/src/.libs -lvftrace -lm
 
 if USES_NEC_MPI
   vftrace_vfd_dump_LDFLAGS += -mpiprof
