@@ -17,79 +17,92 @@ pthread_mutex_t vftr_socket_lock_handle;
 
 bool vftr_socket_thread_active;
 
-struct sockaddr_un vftr_serv_addr;
-int vftr_socket_fd;
-int vftr_client_fd;
+vftr_socket_t vftr_serv;
+vftr_socket_t vftr_client;
 
 void *vftr_do_socket (void *arg) {
-  //printf ("Socket start\n");
-  //struct sockaddr_un serv_addr;
-  int listenfd;
   unlink ("foo");
-  vftr_socket_fd = socket (AF_LOCAL, SOCK_STREAM, 0);
-  bzero (&vftr_serv_addr, sizeof(vftr_serv_addr));
-  vftr_serv_addr.sun_family  = AF_LOCAL;
-  strcpy (vftr_serv_addr.sun_path, "foo");
-  int ret1 = bind(vftr_socket_fd, (struct sockaddr*)&vftr_serv_addr, sizeof(vftr_serv_addr));
-  //printf ("bind: %d %d\n", ret1, errno);
-  int ret2 = listen (vftr_socket_fd, LISTENQ);
-  //printf ("listen: %d %d\n", ret2, errno);
-  //printf ("vftr_socket_fd: %d\n",  vftr_socket_fd);
-  //printf ("socket active: %d\n", vftr_socket_thread_active);
+  vftr_serv.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
+  vftr_serv.state = ACCEPT;
+  bzero (&(vftr_serv.addr), sizeof(vftr_serv.addr));
+  vftr_serv.addr.sun_family = AF_LOCAL;
+  strcpy (vftr_serv.addr.sun_path, "foo");
+  int ret1 = bind(vftr_serv.fd, (struct sockaddr*)&vftr_serv.addr, sizeof(vftr_serv.addr));
+  int ret2 = listen (vftr_serv.fd, LISTENQ);
     pthread_mutex_lock (&vftr_socket_lock_handle);
   vftr_socket_thread_active = true;
     pthread_mutex_unlock (&vftr_socket_lock_handle);
   while (true) {
-    //printf ("Wait\n");
     struct sockaddr_un client_addr;
     socklen_t socklen = sizeof (client_addr);
-    //printf ("socklen: %d\n", socklen);
-    int connfd = accept (vftr_socket_fd, (struct sockaddr *) &client_addr, &socklen); 
-    //printf ("connfd: %d %d\n", connfd, errno);
-    //int connfd = accept (vftr_socket_fd(struct sockaddr *) &client_addr, (socklen_t*)sizeof(client_addr)); 
-    //char linebuf[64];
-    char line;
-    //while (read (connfd, linebuf, sizeof(char) * 64) > 0) {
-    while (read (connfd, &line, sizeof(char)) > 0) {
-       printf ("Received: %c\n", line);
+    printf ("Accept incoming: \n");
+    int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
+    printf ("There's a connection \n");
+    char linebuf[4];
+    int command, send;
+    switch (vftr_serv.state) {
+      case ACCEPT:
+        printf ("Server reads\n");
+        read (connfd, &command, sizeof(int));
+        printf ("Server Received: %d \n", command);
+        if (command == GIVE) {
+          printf ("Send okay\n");
+          send = OKAY;
+          write (connfd, &send, sizeof(int)); 
+          printf ("Going to send stuff: %d\n", send);
+          send = 12345; 
+          write (connfd, &send, sizeof(int));
+        } else if (command == STOP) {
+          printf ("Need to shut down server\n");
+          pthread_mutex_lock (&vftr_socket_lock_handle);
+          vftr_socket_thread_active = false;
+          pthread_mutex_unlock (&vftr_socket_lock_handle);
+          close(vftr_serv.fd); 
+        }
+        printf ("Server done\n");
     }
-    //printf ("lock 1\n");
     pthread_mutex_lock (&vftr_socket_lock_handle);
+    printf ("next iteration: %d\n", vftr_socket_thread_active);
     if (!vftr_socket_thread_active) {
        pthread_mutex_unlock (&vftr_socket_lock_handle);
        break;
     }
     pthread_mutex_unlock (&vftr_socket_lock_handle);
-    //printf ("unlock 1\n");
   } 
-  //printf ("Socket end\n");
 }
 
 void vftr_connect_client () {
-    //printf ("lock 2\n");
   pthread_mutex_lock (&vftr_socket_lock_handle);
   if (!vftr_socket_thread_active) {
-     //printf ("Return because the socket is not active\n");
      pthread_mutex_unlock (&vftr_socket_lock_handle);
      return;
-  } else {
-     //printf ("SEND\n");
   }
   pthread_mutex_unlock (&vftr_socket_lock_handle);
-  vftr_client_fd  = socket (AF_LOCAL, SOCK_STREAM, 0);
-  struct sockaddr_un connect_to;
-  bzero (&connect_to, sizeof(connect_to));
-  connect_to.sun_family = AF_LOCAL;
-  strcpy (connect_to.sun_path, "foo");
-  vftr_client_fd = socket (AF_LOCAL, SOCK_STREAM, 0);
-  connect (vftr_client_fd, (struct sockaddr*) &connect_to, sizeof(connect_to));
-  ///connect (vftr_socket_fd, (struct sockaddr*) &connect_to, sizeof(connect_to));
-  //printf ("clientfd: %d\n", vftr_socket_fd);
-  //write (vftr_client_fd, "HUHU", strlen("HUHU") * sizeof(char)); 
-  char send = 'x';
-  //write (vftr_socket_fd, &send, sizeof(char));
-  write (vftr_client_fd, &send, sizeof(char));
-  close (vftr_client_fd);
+  vftr_client.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
+  bzero (&(vftr_client.addr), sizeof(vftr_client.addr));
+  vftr_client.addr.sun_family = AF_LOCAL;
+  strcpy (vftr_client.addr.sun_path, "foo");
+  connect (vftr_client.fd, (struct sockaddr*) &(vftr_client.addr), sizeof(vftr_client.addr));
+  int send = GIVE;
+  int recv;
+  write (vftr_client.fd, &send, sizeof(int));
+  read (vftr_client.fd, &recv, sizeof(int));
+  if (recv == OKAY) {
+    int n_stack_ids;
+    read (vftr_client.fd, &n_stack_ids, sizeof(int)); 
+  } 
+  close (vftr_client.fd);
+}
+
+void vftr_connect_and_close () {
+  vftr_client.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
+  bzero (&(vftr_client.addr), sizeof(vftr_client.addr));
+  vftr_client.addr.sun_family = AF_LOCAL;
+  strcpy (vftr_client.addr.sun_path, "foo");
+  connect (vftr_client.fd, (struct sockaddr*) &(vftr_client.addr), sizeof(vftr_client.addr));
+  int send = STOP;
+  write (vftr_client.fd, &send, sizeof(int));
+  close (vftr_client.fd); 
 }
 
 void vftr_create_socket_thread () {
@@ -106,9 +119,7 @@ void vftr_create_socket_thread () {
 }
 
 void vftr_join_socket_thread() {
-  pthread_mutex_lock (&vftr_socket_lock_handle);
-  vftr_socket_thread_active = false;
-  pthread_mutex_unlock (&vftr_socket_lock_handle);
+  vftr_connect_and_close();
   pthread_join (vftr_socket_thread, NULL);
   pthread_mutex_destroy (&vftr_socket_lock_handle);
 }
