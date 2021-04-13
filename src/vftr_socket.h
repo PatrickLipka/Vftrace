@@ -1,6 +1,7 @@
 #ifndef VFTR_SOCKET_H
 #define VFTR_SOCKET_H
 
+#include <pthread.h>
 #include <sys/un.h>
 
 enum server_states {ACCEPT, SEND, CLOSE};
@@ -12,9 +13,12 @@ typedef struct vftr_socket {
   struct sockaddr_un addr; 
 } vftr_socket_t;
 
+extern pthread_mutex_t vftr_socket_lock_handle;
+
+extern int vftr_n_stackids_to_send;
+extern int vftr_stackids_to_send[10];
+
 extern bool vftr_socket_thread_active;
-//extern int vftr_client_fd;
-//extern struct sockaddr_un vftr_serv_addr;
 extern vftr_socket_t vftr_serv;
 extern vftr_socket_t vftr_client;
 

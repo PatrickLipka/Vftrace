@@ -20,6 +20,9 @@ bool vftr_socket_thread_active;
 vftr_socket_t vftr_serv;
 vftr_socket_t vftr_client;
 
+int vftr_n_stackids_to_send;
+int vftr_stackids_to_send[10];
+
 void *vftr_do_socket (void *arg) {
   unlink ("foo");
   vftr_serv.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
@@ -35,34 +38,30 @@ void *vftr_do_socket (void *arg) {
   while (true) {
     struct sockaddr_un client_addr;
     socklen_t socklen = sizeof (client_addr);
-    printf ("Accept incoming: \n");
     int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
-    printf ("There's a connection \n");
     char linebuf[4];
     int command, send;
     switch (vftr_serv.state) {
       case ACCEPT:
-        printf ("Server reads\n");
         read (connfd, &command, sizeof(int));
-        printf ("Server Received: %d \n", command);
         if (command == GIVE) {
-          printf ("Send okay\n");
           send = OKAY;
           write (connfd, &send, sizeof(int)); 
-          printf ("Going to send stuff: %d\n", send);
-          send = 12345; 
-          write (connfd, &send, sizeof(int));
+          send = vftr_n_stackids_to_send; 
+          write (connfd, &vftr_n_stackids_to_send, sizeof(int));
+          for (int i = 0; i < vftr_n_stackids_to_send; i++) {
+            write (connfd, &vftr_stackids_to_send[i], sizeof(int));
+          }
+          vftr_n_stackids_to_send = 0;
         } else if (command == STOP) {
-          printf ("Need to shut down server\n");
           pthread_mutex_lock (&vftr_socket_lock_handle);
           vftr_socket_thread_active = false;
           pthread_mutex_unlock (&vftr_socket_lock_handle);
+          vftr_serv.state = CLOSE;
           close(vftr_serv.fd); 
         }
-        printf ("Server done\n");
     }
     pthread_mutex_lock (&vftr_socket_lock_handle);
-    printf ("next iteration: %d\n", vftr_socket_thread_active);
     if (!vftr_socket_thread_active) {
        pthread_mutex_unlock (&vftr_socket_lock_handle);
        break;
@@ -90,6 +89,15 @@ void vftr_connect_client () {
   if (recv == OKAY) {
     int n_stack_ids;
     read (vftr_client.fd, &n_stack_ids, sizeof(int)); 
+    int *stack_ids = (int*)malloc (n_stack_ids * sizeof(int));
+    for (int i = 0; i < n_stack_ids; i++) {
+      read (vftr_client.fd, &stack_ids[i], sizeof(int)); 
+    }
+    printf ("%d StackIDs: ", n_stack_ids);
+    for (int i = 0; i < n_stack_ids; i++) {
+      printf ("%d ", stack_ids[i]);
+    }
+    printf ("\n");
   } 
   close (vftr_client.fd);
 }
@@ -106,6 +114,8 @@ void vftr_connect_and_close () {
 }
 
 void vftr_create_socket_thread () {
+  vftr_n_stackids_to_send = 0;
+  memset (vftr_stackids_to_send, -1, 10 * sizeof(int));
   pthread_mutex_init (&vftr_socket_lock_handle, NULL);
   pthread_create (&vftr_socket_thread, NULL, vftr_do_socket, NULL);
   while (true) {

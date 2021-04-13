@@ -36,6 +36,7 @@
 #include "vftr_stacks.h"
 #include "vftr_clear_requests.h"
 #include "vftr_sorting.h"
+#include "vftr_socket.h"
 
 bool vftr_profile_wanted = false;
 
@@ -202,6 +203,17 @@ void vftr_function_entry (const char *s, void *addr, bool isPrecise) {
         vftr_prog_cycles += delta;
         func->prof_current.time_incl -= func_entry_time;
     }
+
+    pthread_mutex_lock (&vftr_socket_lock_handle);
+    if (vftr_n_stackids_to_send < 10) {
+      vftr_stackids_to_send[vftr_n_stackids_to_send++] = func->id;
+    } else {
+      for (int i = 1; i < vftr_n_stackids_to_send; i++) {
+        vftr_stackids_to_send[i-1] = vftr_stackids_to_send[i];
+      }
+      vftr_stackids_to_send[vftr_n_stackids_to_send] = func->id;
+    }
+    pthread_mutex_unlock (&vftr_socket_lock_handle);
 
     /* Compensate overhead */
     // The stuff we did here added up cycles. Therefore, we have to reset
