@@ -21,8 +21,10 @@ bool vftr_socket_thread_active;
 vftr_socket_t vftr_serv;
 //vftr_socket_t vftr_client;
 
-int vftr_n_stackids_to_send;
-int vftr_stackids_to_send[VFTR_SOCK_BUFSIZE];
+//int vftr_n_stackids_to_send;
+int vftr_n_funcs_to_send;
+//int vftr_stackids_to_send[VFTR_SOCK_BUFSIZE];
+char* vftr_funcs_to_send[VFTR_SOCK_BUFSIZE];
 long long vftr_timestamps_to_send[VFTR_SOCK_BUFSIZE];
 
 void *vftr_do_socket (void *arg) {
@@ -57,16 +59,22 @@ void *vftr_do_socket (void *arg) {
              pthread_mutex_lock (&vftr_socket_lock_handle);
              send = OKAY;
              write (connfd, &send, sizeof(int)); 
-             send = vftr_n_stackids_to_send; 
-             write (connfd, &vftr_n_stackids_to_send, sizeof(int));
-             for (int i = 0; i < vftr_n_stackids_to_send; i++) {
-               //write (connfd, &vftr_stackids_to_send[i], sizeof(int));
-               int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
+             //send = vftr_n_stackids_to_send; 
+             send = vftr_n_funcs_to_send;
+             //write (connfd, &vftr_n_stackids_to_send, sizeof(int));
+             write (connfd, &vftr_n_funcs_to_send, sizeof(int));
+             vftr_print_func_table();
+             //for (int i = 0; i < vftr_n_stackids_to_send; i++) {
+             for (int i = 0; i < vftr_n_funcs_to_send; i++) {
+               //int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
+               int s = strlen(vftr_funcs_to_send[i]);
+               //printf ("SEND: %d %lld %s\n", vftr_stackids_to_send[i], vftr_timestamps_to_send[i], vftr_func_table[vftr_stackids_to_send[i]]->name);
+               printf ("SEND: %lld %s\n", vftr_timestamps_to_send[i], vftr_funcs_to_send[i]);
                write (connfd, &s, sizeof(int));
-               write (connfd, vftr_func_table[vftr_stackids_to_send[i]]->name, s * sizeof(char));
+               write (connfd, vftr_funcs_to_send[i], s * sizeof(char));
                write (connfd, &vftr_timestamps_to_send[i], sizeof(long long));
              }
-             vftr_n_stackids_to_send = 0;
+             vftr_n_funcs_to_send = 0;
              pthread_mutex_unlock (&vftr_socket_lock_handle);
            } else if (command == CONN_STOP) {
              keep_open = false;
@@ -146,8 +154,9 @@ void vftr_connect_and_close () {
 }
 
 void vftr_create_socket_thread () {
-  vftr_n_stackids_to_send = 0;
-  memset (vftr_stackids_to_send, -1, VFTR_SOCK_BUFSIZE * sizeof(int));
+  printf  ("Create socket thread\n");
+  vftr_n_funcs_to_send = 0;
+  memset (vftr_funcs_to_send, -1, VFTR_SOCK_BUFSIZE * sizeof(int));
   memset (vftr_timestamps_to_send, -1, VFTR_SOCK_BUFSIZE * sizeof(long long));
   pthread_mutex_init (&vftr_socket_lock_handle, NULL);
   pthread_create (&vftr_socket_thread, NULL, vftr_do_socket, NULL);

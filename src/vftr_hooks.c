@@ -206,17 +206,20 @@ void vftr_function_entry (const char *s, void *addr, bool isPrecise) {
 
     if (vftr_mpirank == 0) {
       pthread_mutex_lock (&vftr_socket_lock_handle);
-      if (vftr_n_stackids_to_send < VFTR_SOCK_BUFSIZE) {
-        vftr_stackids_to_send[vftr_n_stackids_to_send] = func->id;
-        vftr_timestamps_to_send[vftr_n_stackids_to_send] = vftr_get_runtime_usec();
-        vftr_n_stackids_to_send++;
+      if (vftr_n_funcs_to_send < VFTR_SOCK_BUFSIZE) {
+        //vftr_stackids_to_send[vftr_n_stackids_to_send] = func->id;
+        vftr_funcs_to_send[vftr_n_funcs_to_send] = func->name;
+        vftr_timestamps_to_send[vftr_n_funcs_to_send] = vftr_get_runtime_usec();
+        vftr_n_funcs_to_send++;
       } else {
-        for (int i = 1; i < vftr_n_stackids_to_send; i++) {
-          vftr_stackids_to_send[i-1] = vftr_stackids_to_send[i];
+        for (int i = 1; i < vftr_n_funcs_to_send; i++) {
+          //vftr_stackids_to_send[i-1] = vftr_stackids_to_send[i];
+          vftr_funcs_to_send[i-1] = vftr_funcs_to_send[i];
           vftr_timestamps_to_send[i-1] = vftr_timestamps_to_send[i];
         }
-        vftr_stackids_to_send[vftr_n_stackids_to_send - 1] = func->id;
-        vftr_timestamps_to_send[vftr_n_stackids_to_send - 1] = vftr_get_runtime_usec();
+        //vftr_stackids_to_send[vftr_n_stackids_to_send - 1] = func->id;
+        vftr_funcs_to_send[vftr_n_funcs_to_send - 1] = func->name;
+        vftr_timestamps_to_send[vftr_n_funcs_to_send - 1] = vftr_get_runtime_usec();
       }
       pthread_mutex_unlock (&vftr_socket_lock_handle);
     }

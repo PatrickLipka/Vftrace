@@ -59,6 +59,15 @@ stack_string_t *vftr_global_stack_strings;
 
 /**********************************************************************/
 
+void vftr_print_func_table () {
+  printf ("***FUNCTABLE***\n");
+  for (int i = 0; i < vftr_stackscount; i++) {
+    printf ("%d: %s(%d)\n", i, vftr_func_table[i]->name, vftr_func_table[i]->id);
+  }
+}
+
+/**********************************************************************/
+
 // initialize stacks only called from vftr_initialize
 void vftr_initialize_stacks() {
    // Allocate stack tables for each thread
