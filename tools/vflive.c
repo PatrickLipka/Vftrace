@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #include "vftr_socket.h"
 #include <sys/socket.h>
@@ -48,6 +49,8 @@ int main (int argc, char *argv[]) {
       //}
       //printf ("\n");
       //free (stack_ids);
+    } else if (recv == VFTR_CLOSE) {
+      break;
     }
   }
   close (sock.fd);

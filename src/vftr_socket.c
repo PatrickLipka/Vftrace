@@ -79,7 +79,24 @@ void *vftr_do_socket (void *arg) {
              vftr_serv.state = CLOSE;
              close(vftr_serv.fd); 
            }
+           break;
+         case CLOSE:
+           read (connfd, &command, sizeof(int));
+           printf ("Tell the client that it's over\n");
+           // Tell the client that it's over
+           send = VFTR_CLOSE;
+           write (connfd, &send, sizeof(int));
+           keep_open = false;
        }
+       pthread_mutex_lock (&vftr_socket_lock_handle);
+       //printf ("Active? %d\n", vftr_socket_thread_active);
+       if (!vftr_socket_thread_active) {
+          printf ("Thread is not active any more\n");
+          vftr_serv.state = CLOSE; 
+          //pthread_mutex_unlock (&vftr_socket_lock_handle);
+          //break;
+       }
+       pthread_mutex_unlock (&vftr_socket_lock_handle);
     }
     pthread_mutex_lock (&vftr_socket_lock_handle);
     if (!vftr_socket_thread_active) {
@@ -124,7 +141,7 @@ void *vftr_do_socket (void *arg) {
 //}
 
 void vftr_connect_and_close () {
-  //printf ("Connect and close!\n");
+  printf ("Connect and close!\n");
   vftr_socket_t tmp_close;
   tmp_close.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
   bzero (&(tmp_close.addr), sizeof(tmp_close.addr));
@@ -162,7 +179,14 @@ void vftr_create_socket_thread () {
 }
 
 void vftr_join_socket_thread() {
+  printf ("Join socket thread 0\n");
+  pthread_mutex_lock (&vftr_socket_lock_handle);
+  vftr_socket_thread_active = false;
+  pthread_mutex_unlock (&vftr_socket_lock_handle);
+  printf ("Join socket thread 1\n");
   vftr_connect_and_close();
   pthread_join (vftr_socket_thread, NULL);
+  printf ("Join socket thread 2\n");
   pthread_mutex_destroy (&vftr_socket_lock_handle);
+  printf ("Join socket thread 3\n");
 }
