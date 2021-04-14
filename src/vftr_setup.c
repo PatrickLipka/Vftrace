@@ -42,6 +42,7 @@
 #include "vftr_timer.h"
 #include "vftr_functions.h"
 #include "vftr_allocate.h"
+#include "vftr_socket.h"
 
 bool vftr_timer_end;
 
