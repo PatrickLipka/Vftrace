@@ -7,7 +7,7 @@
 #define VFTR_SOCK_BUFSIZE 10
 
 enum server_states {ACCEPT, SEND, CLOSE};
-enum comm_commands {GIVE, OKAY, STOP};
+enum comm_commands {GIVE, OKAY, CONN_STOP, VFTR_CLOSE};
 
 typedef struct vftr_socket {
   int state;  

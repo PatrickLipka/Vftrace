@@ -39,38 +39,47 @@ void *vftr_do_socket (void *arg) {
   pthread_mutex_unlock (&vftr_socket_lock_handle);
   struct sockaddr_un client_addr;
   socklen_t socklen = sizeof (client_addr);
-  int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
   while (true) {
-    char linebuf[4];
-    int command, send;
-    command = -999;
-    switch (vftr_serv.state) {
-      case ACCEPT:
-        //printf ("Read new: \n");
-        read (connfd, &command, sizeof(int));
-        //printf ("READ: %d\n", command);
-        if (command == GIVE) {
-          pthread_mutex_lock (&vftr_socket_lock_handle);
-          send = OKAY;
-          write (connfd, &send, sizeof(int)); 
-          send = vftr_n_stackids_to_send; 
-          write (connfd, &vftr_n_stackids_to_send, sizeof(int));
-          for (int i = 0; i < vftr_n_stackids_to_send; i++) {
-            //write (connfd, &vftr_stackids_to_send[i], sizeof(int));
-            int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
-            write (connfd, &s, sizeof(int));
-            write (connfd, vftr_func_table[vftr_stackids_to_send[i]]->name, s * sizeof(char));
-            write (connfd, &vftr_timestamps_to_send[i], sizeof(long long));
-          }
-          vftr_n_stackids_to_send = 0;
-          pthread_mutex_unlock (&vftr_socket_lock_handle);
-        } else if (command == STOP) {
-          pthread_mutex_lock (&vftr_socket_lock_handle);
-          vftr_socket_thread_active = false;
-          pthread_mutex_unlock (&vftr_socket_lock_handle);
-          vftr_serv.state = CLOSE;
-          close(vftr_serv.fd); 
-        }
+    //printf ("Wait for connections: \n");
+    int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
+    bool keep_open = connfd > 0;
+    while (keep_open) {
+       //printf ("CHECK ACCEPTED: %d\n", vftr_serv.fd);
+       char linebuf[4];
+       int command, send;
+       command = -999;
+       switch (vftr_serv.state) {
+         case ACCEPT:
+           //printf ("Read new: \n");
+           read (connfd, &command, sizeof(int));
+           //printf ("READ: %d\n", command);
+           if (command == GIVE) {
+             pthread_mutex_lock (&vftr_socket_lock_handle);
+             send = OKAY;
+             write (connfd, &send, sizeof(int)); 
+             send = vftr_n_stackids_to_send; 
+             write (connfd, &vftr_n_stackids_to_send, sizeof(int));
+             for (int i = 0; i < vftr_n_stackids_to_send; i++) {
+               //write (connfd, &vftr_stackids_to_send[i], sizeof(int));
+               int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
+               write (connfd, &s, sizeof(int));
+               write (connfd, vftr_func_table[vftr_stackids_to_send[i]]->name, s * sizeof(char));
+               write (connfd, &vftr_timestamps_to_send[i], sizeof(long long));
+             }
+             vftr_n_stackids_to_send = 0;
+             pthread_mutex_unlock (&vftr_socket_lock_handle);
+           } else if (command == CONN_STOP) {
+             keep_open = false;
+           } else if (command == VFTR_CLOSE) {
+             printf ("Received STOP signal\n");
+             keep_open = false;
+             pthread_mutex_lock (&vftr_socket_lock_handle);
+             vftr_socket_thread_active = false;
+             pthread_mutex_unlock (&vftr_socket_lock_handle);
+             vftr_serv.state = CLOSE;
+             close(vftr_serv.fd); 
+           }
+       }
     }
     pthread_mutex_lock (&vftr_socket_lock_handle);
     if (!vftr_socket_thread_active) {
@@ -121,10 +130,18 @@ void vftr_connect_and_close () {
   bzero (&(tmp_close.addr), sizeof(tmp_close.addr));
   tmp_close.addr.sun_family = AF_LOCAL;
   strcpy (tmp_close.addr.sun_path, "foo");
-  connect (tmp_close.fd, (struct sockaddr*) &(tmp_close.addr), sizeof(tmp_close.addr));
-  int send = STOP;
-  //printf ("Send stop signal\n");
+  int ret = connect (tmp_close.fd, (struct sockaddr*) &(tmp_close.addr), sizeof(tmp_close.addr));
+  //printf ("test: %d\n", vftr_serv.fd);
+  //int ret = connect (vftr_serv.fd, (struct sockaddr*)&tmp_close.addr, sizeof(tmp_close.addr));
+  if (ret < 0) {
+    printf ("Error connecting to sockect: %d\n", errno);
+  } else {
+    printf ("Connection OKAY: %d\n", tmp_close.fd);
+  }
+  int send = VFTR_CLOSE;
+  printf ("Send stop signal\n");
   write (tmp_close.fd, &send, sizeof(int));
+  printf ("Send stop signal - done\n");
   close (tmp_close.fd); 
 }
 
