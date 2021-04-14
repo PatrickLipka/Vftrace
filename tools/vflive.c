@@ -35,12 +35,12 @@ int main (int argc, char *argv[]) {
         int s;
         //read (sock.fd, &stack_ids[i], sizeof(int));
         read (sock.fd, &s, sizeof(int));
-        char name[s+1];
+        char name[s];
         read (sock.fd, name, s * sizeof(char));
-        name[s+1] = '\0';
+        //name[s+1] = '\0';
         long long ts;
         read (sock.fd, &ts, sizeof(long long));
-        printf ("%lld: %s\n", ts, name); 
+        //printf ("%lld: %s\n", ts, name); 
         fflush(stdout);
       }
       //printf ("%d StackIDs: ", n_stack_ids);

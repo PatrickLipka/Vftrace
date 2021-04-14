@@ -63,11 +63,11 @@ void *vftr_do_socket (void *arg) {
              send = vftr_n_funcs_to_send;
              //write (connfd, &vftr_n_stackids_to_send, sizeof(int));
              write (connfd, &vftr_n_funcs_to_send, sizeof(int));
-             vftr_print_func_table();
+             //vftr_print_func_table();
              //for (int i = 0; i < vftr_n_stackids_to_send; i++) {
              for (int i = 0; i < vftr_n_funcs_to_send; i++) {
                //int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
-               int s = strlen(vftr_funcs_to_send[i]);
+               int s = strlen(vftr_funcs_to_send[i]) + 1;
                //printf ("SEND: %d %lld %s\n", vftr_stackids_to_send[i], vftr_timestamps_to_send[i], vftr_func_table[vftr_stackids_to_send[i]]->name);
                printf ("SEND: %lld %s\n", vftr_timestamps_to_send[i], vftr_funcs_to_send[i]);
                write (connfd, &s, sizeof(int));
