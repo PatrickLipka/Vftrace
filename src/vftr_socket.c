@@ -42,38 +42,33 @@ void *vftr_do_socket (void *arg) {
   struct sockaddr_un client_addr;
   socklen_t socklen = sizeof (client_addr);
   while (true) {
-    //printf ("Wait for connections: \n");
+    printf ("Wait for connections: \n");
     int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
+    printf ("There is a connection: \n");
     bool keep_open = connfd > 0;
     while (keep_open) {
-       //printf ("CHECK ACCEPTED: %d\n", vftr_serv.fd);
        char linebuf[4];
        int command, send;
        command = -999;
        switch (vftr_serv.state) {
          case ACCEPT:
-           //printf ("Read new: \n");
            read (connfd, &command, sizeof(int));
-           //printf ("READ: %d\n", command);
            if (command == GIVE) {
              pthread_mutex_lock (&vftr_socket_lock_handle);
              send = OKAY;
              write (connfd, &send, sizeof(int)); 
-             //send = vftr_n_stackids_to_send; 
              send = vftr_n_funcs_to_send;
-             //write (connfd, &vftr_n_stackids_to_send, sizeof(int));
-             write (connfd, &vftr_n_funcs_to_send, sizeof(int));
-             //vftr_print_func_table();
-             //for (int i = 0; i < vftr_n_stackids_to_send; i++) {
-             for (int i = 0; i < vftr_n_funcs_to_send; i++) {
-               //int s = strlen(vftr_func_table[vftr_stackids_to_send[i]]->name);
-               int s = strlen(vftr_funcs_to_send[i]) + 1;
-               //printf ("SEND: %d %lld %s\n", vftr_stackids_to_send[i], vftr_timestamps_to_send[i], vftr_func_table[vftr_stackids_to_send[i]]->name);
-               printf ("SEND: %lld %s\n", vftr_timestamps_to_send[i], vftr_funcs_to_send[i]);
-               write (connfd, &s, sizeof(int));
-               write (connfd, vftr_funcs_to_send[i], s * sizeof(char));
-               write (connfd, &vftr_timestamps_to_send[i], sizeof(long long));
-             }
+             int packet_size = sizeof(int) + vftr_n_funcs_to_send * sizeof(long long);
+             char *packet = (char*)malloc (packet_size);
+             char *packet0 = packet;
+             memcpy (packet, &vftr_n_funcs_to_send, sizeof(int));
+             packet += sizeof(int);
+             if (vftr_n_funcs_to_send > 0) memcpy (packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
+             packet = packet0;
+               
+             write (connfd, &packet_size, sizeof(int));
+             write (connfd, packet, packet_size);
+             free (packet); // Also frees packet0
              vftr_n_funcs_to_send = 0;
              pthread_mutex_unlock (&vftr_socket_lock_handle);
            } else if (command == CONN_STOP) {
@@ -97,12 +92,9 @@ void *vftr_do_socket (void *arg) {
            keep_open = false;
        }
        pthread_mutex_lock (&vftr_socket_lock_handle);
-       //printf ("Active? %d\n", vftr_socket_thread_active);
        if (!vftr_socket_thread_active) {
           printf ("Thread is not active any more\n");
           vftr_serv.state = CLOSE; 
-          //pthread_mutex_unlock (&vftr_socket_lock_handle);
-          //break;
        }
        pthread_mutex_unlock (&vftr_socket_lock_handle);
     }
@@ -111,7 +103,6 @@ void *vftr_do_socket (void *arg) {
        pthread_mutex_unlock (&vftr_socket_lock_handle);
        break;
     }
-    //printf ("Next iter: %d\n", vftr_socket_thread_active);
     pthread_mutex_unlock (&vftr_socket_lock_handle);
   } 
 }

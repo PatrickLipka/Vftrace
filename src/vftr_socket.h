@@ -15,6 +15,13 @@ typedef struct vftr_socket {
   struct sockaddr_un addr; 
 } vftr_socket_t;
 
+typedef struct vftr_packet {
+  int n_entries;
+  //int *func_name_lengths;
+  //char **func_names;
+  long long *time_stamps;
+} vftr_packet_t;
+
 extern pthread_mutex_t vftr_socket_lock_handle;
 
 //extern int vftr_n_stackids_to_send;

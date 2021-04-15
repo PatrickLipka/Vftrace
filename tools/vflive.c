@@ -22,33 +22,30 @@ int main (int argc, char *argv[]) {
   while (true) {
     int send = GIVE; 
     int recv;
-    //printf ("Send: \n");
     write (sock.fd, &send, sizeof(int));
-    //printf ("Receive: \n");
     read (sock.fd, &recv, sizeof(int));
-    //printf ("Recv: %d\n", recv);
     if (recv == OKAY) {
-      int n_stack_ids;
-      read (sock.fd, &n_stack_ids, sizeof(int));
-      //int *stack_ids = (int*)malloc (n_stack_ids * sizeof(int));
-      for (int i = 0; i < n_stack_ids; i++) {
-        int s;
-        //read (sock.fd, &stack_ids[i], sizeof(int));
-        read (sock.fd, &s, sizeof(int));
-        char name[s];
-        read (sock.fd, name, s * sizeof(char));
-        //name[s+1] = '\0';
-        long long ts;
-        read (sock.fd, &ts, sizeof(long long));
-        //printf ("%lld: %s\n", ts, name); 
-        fflush(stdout);
+      int packet_size;
+      read (sock.fd, &packet_size, sizeof(int));
+      char *packet = (char*)malloc (packet_size);
+      char *packet0 = packet;
+      read (sock.fd, packet, packet_size);
+      int n_entries = *((int*)packet);
+      packet += sizeof(int);
+      if (n_entries > 0) {
+        long long *ts = (long long*) malloc (n_entries * sizeof(long long));
+        for (int i = 0; i < n_entries; i++) {
+          ts[i] = *((long long*)packet); 
+          packet += sizeof(long long);
+        }
+        printf ("ts: ");
+        for (int i = 0; i < n_entries; i++) {
+          printf ("%lld ", ts[i]);
+        }
+        printf ("\n");
       }
-      //printf ("%d StackIDs: ", n_stack_ids);
-      //for (int i = 0; i < n_stack_ids; i++) {
-      //  printf ("%d ", stack_ids[i]);
-      //}
-      //printf ("\n");
-      //free (stack_ids);
+      packet = packet0;
+      free(packet);
     } else if (recv == VFTR_CLOSE) {
       break;
     }
