@@ -41,6 +41,7 @@ void *vftr_do_socket (void *arg) {
   pthread_mutex_unlock (&vftr_socket_lock_handle);
   struct sockaddr_un client_addr;
   socklen_t socklen = sizeof (client_addr);
+  long long t_first = vftr_get_runtime_usec();
   while (true) {
     printf ("Wait for connections: \n");
     int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
@@ -58,7 +59,7 @@ void *vftr_do_socket (void *arg) {
              send = OKAY;
              write (connfd, &send, sizeof(int)); 
              send = vftr_n_funcs_to_send;
-             int packet_size = sizeof(int) + vftr_n_funcs_to_send * sizeof(long long);
+             int packet_size = sizeof(int) + (vftr_n_funcs_to_send + 1) * sizeof(long long);
              int *strlens = (int*) malloc (vftr_n_funcs_to_send * sizeof(int));
              for (int i = 0; i < vftr_n_funcs_to_send; i++) {
                strlens[i] = strlen(vftr_funcs_to_send[i]) + 1;
@@ -69,6 +70,8 @@ void *vftr_do_socket (void *arg) {
              //if (vftr_n_funcs_to_send) printf ("send_n_functions: %d\n", vftr_n_funcs_to_send);
              memcpy (packet, &vftr_n_funcs_to_send, sizeof(int));
              packet += sizeof(int);
+             memcpy (packet, &t_first, sizeof(long long));
+             packet += sizeof(long long);
              if (vftr_n_funcs_to_send > 0) {
                 memcpy (packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
              }
@@ -122,38 +125,6 @@ void *vftr_do_socket (void *arg) {
     pthread_mutex_unlock (&vftr_socket_lock_handle);
   } 
 }
-
-//void vftr_connect_client () {
-//  pthread_mutex_lock (&vftr_socket_lock_handle);
-//  if (!vftr_socket_thread_active) {
-//     pthread_mutex_unlock (&vftr_socket_lock_handle);
-//     return;
-//  }
-//  pthread_mutex_unlock (&vftr_socket_lock_handle);
-//  vftr_client.fd = socket (AF_LOCAL, SOCK_STREAM, 0);
-//  bzero (&(vftr_client.addr), sizeof(vftr_client.addr));
-//  vftr_client.addr.sun_family = AF_LOCAL;
-//  strcpy (vftr_client.addr.sun_path, "foo");
-//  connect (vftr_client.fd, (struct sockaddr*) &(vftr_client.addr), sizeof(vftr_client.addr));
-//  //int send = GIVE;
-//  //int recv;
-//  //write (vftr_client.fd, &send, sizeof(int));
-//  //read (vftr_client.fd, &recv, sizeof(int));
-//  //if (recv == OKAY) {
-//  //  int n_stack_ids;
-//  //  read (vftr_client.fd, &n_stack_ids, sizeof(int)); 
-//  //  int *stack_ids = (int*)malloc (n_stack_ids * sizeof(int));
-//  //  for (int i = 0; i < n_stack_ids; i++) {
-//  //    read (vftr_client.fd, &stack_ids[i], sizeof(int)); 
-//  //  }
-//  //  printf ("%d StackIDs: ", n_stack_ids);
-//  //  for (int i = 0; i < n_stack_ids; i++) {
-//  //    printf ("%d ", stack_ids[i]);
-//  //  }
-//  //  printf ("\n");
-//  //} 
-//  close (vftr_client.fd);
-//}
 
 void vftr_connect_and_close () {
   printf ("Connect and close!\n");

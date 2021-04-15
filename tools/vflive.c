@@ -2,9 +2,16 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <sys/socket.h>
 
 #include "vftr_socket.h"
-#include <sys/socket.h>
+
+void display_timestamp (long long ts, char *func_name) {
+  int seconds = ts / 1000000;
+  int milli_seconds = (ts - seconds * 1000000) / 1000;
+  printf ("%d:%d %s\n", seconds, milli_seconds, func_name);
+}
+
 
 int main (int argc, char *argv[]) {
   if (argc < 2) {
@@ -32,6 +39,8 @@ int main (int argc, char *argv[]) {
       read (sock.fd, packet, packet_size);
       int n_entries = *((int*)packet);
       packet += sizeof(int);
+      long long t_first = *((long long*)packet);
+      packet += sizeof(long long);
       long long *ts;
       if (n_entries > 0) {
         ts = (long long*) malloc (n_entries * sizeof(long long));
@@ -44,7 +53,8 @@ int main (int argc, char *argv[]) {
       for (int i = 0; i < n_entries; i++) {
         int s = *((int*)packet);
         packet += sizeof(int);
-        printf ("%lld: %s\n", ts[i], (char*)packet);
+        //printf ("%lld: %s\n", ts[i] - t_first, (char*)packet);
+        display_timestamp (ts[i] - t_first, (char*)packet);
         packet += s * sizeof(char);
       }
       fflush(stdout);

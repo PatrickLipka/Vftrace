@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <sys/un.h>
 
-#define VFTR_SOCK_BUFSIZE 10
+#define VFTR_SOCK_BUFSIZE 100
 
 enum server_states {ACCEPT, SEND, CLOSE};
 enum comm_commands {GIVE, OKAY, CONN_STOP, VFTR_CLOSE};
