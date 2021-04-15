@@ -59,16 +59,32 @@ void *vftr_do_socket (void *arg) {
              write (connfd, &send, sizeof(int)); 
              send = vftr_n_funcs_to_send;
              int packet_size = sizeof(int) + vftr_n_funcs_to_send * sizeof(long long);
+             int *strlens = (int*) malloc (vftr_n_funcs_to_send * sizeof(int));
+             for (int i = 0; i < vftr_n_funcs_to_send; i++) {
+               strlens[i] = strlen(vftr_funcs_to_send[i]) + 1;
+               packet_size += (strlens[i] * sizeof(char) + sizeof(int));
+             }
              char *packet = (char*)malloc (packet_size);
              char *packet0 = packet;
+             //if (vftr_n_funcs_to_send) printf ("send_n_functions: %d\n", vftr_n_funcs_to_send);
              memcpy (packet, &vftr_n_funcs_to_send, sizeof(int));
              packet += sizeof(int);
-             if (vftr_n_funcs_to_send > 0) memcpy (packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
+             if (vftr_n_funcs_to_send > 0) {
+                memcpy (packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
+             }
+             packet += vftr_n_funcs_to_send * sizeof(long long);
+             for (int i = 0; i < vftr_n_funcs_to_send; i++) {
+               memcpy (packet, &strlens[i], sizeof(int));
+               packet += sizeof(int);
+               memcpy (packet, vftr_funcs_to_send[i], strlens[i] * sizeof(char));
+               packet += strlens[i] * sizeof(char);
+             }
              packet = packet0;
                
              write (connfd, &packet_size, sizeof(int));
              write (connfd, packet, packet_size);
              free (packet); // Also frees packet0
+             free (strlens);
              vftr_n_funcs_to_send = 0;
              pthread_mutex_unlock (&vftr_socket_lock_handle);
            } else if (command == CONN_STOP) {

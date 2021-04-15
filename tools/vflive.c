@@ -32,18 +32,22 @@ int main (int argc, char *argv[]) {
       read (sock.fd, packet, packet_size);
       int n_entries = *((int*)packet);
       packet += sizeof(int);
+      long long *ts;
       if (n_entries > 0) {
-        long long *ts = (long long*) malloc (n_entries * sizeof(long long));
+        ts = (long long*) malloc (n_entries * sizeof(long long));
+        
         for (int i = 0; i < n_entries; i++) {
           ts[i] = *((long long*)packet); 
           packet += sizeof(long long);
         }
-        printf ("ts: ");
-        for (int i = 0; i < n_entries; i++) {
-          printf ("%lld ", ts[i]);
-        }
-        printf ("\n");
       }
+      for (int i = 0; i < n_entries; i++) {
+        int s = *((int*)packet);
+        packet += sizeof(int);
+        printf ("%lld: %s\n", ts[i], (char*)packet);
+        packet += s * sizeof(char);
+      }
+      fflush(stdout);
       packet = packet0;
       free(packet);
     } else if (recv == VFTR_CLOSE) {
