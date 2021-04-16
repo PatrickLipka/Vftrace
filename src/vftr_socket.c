@@ -66,9 +66,9 @@ void vftr_create_packet (int *packet_size, char **packet) {
   *packet += sizeof(long long);
   if (vftr_n_funcs_to_send > 0) {
      memcpy (*packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
-     //*packet += vftr_n_funcs_to_send * sizeof(long long);
+     *packet += vftr_n_funcs_to_send * sizeof(long long);
      memcpy (*packet, vftr_idents, vftr_n_funcs_to_send * sizeof(int));
-     *packet += vftr_n_funcs_to_send * (sizeof(int) + sizeof(long long));
+     *packet += vftr_n_funcs_to_send * sizeof(int);
   }
   for (int i = 0; i < vftr_n_funcs_to_send; i++) {
     memcpy (*packet, &strlens[i], sizeof(int));
@@ -78,6 +78,42 @@ void vftr_create_packet (int *packet_size, char **packet) {
   }
   *packet = packet0;
   free (strlens);
+}
+
+/**********************************************************************/
+
+void vftr_print_packet (FILE *fp, char *packet) {
+  char *packet0 = packet;
+  fprintf (fp, "Package content: \n");
+  int n_funcs = *((int*)packet);
+  packet += sizeof(int);
+  fprintf (fp, "Nr. of functions: %d\n", n_funcs);
+  fprintf (fp, "First timestamp: %lld\n", *((long long*)packet));
+  packet += sizeof(long long);
+  if (n_funcs > 0) {
+    fprintf (fp, "Timestamps: ");
+    for (int i = 0; i < n_funcs; i++) {
+      fprintf (fp, "%lld ", *((long long*)packet));
+      packet += sizeof(long long);
+    }
+    fprintf (fp, "\n");
+    fprintf (fp, "Indentations: ");
+    for (int i = 0; i < n_funcs; i++) {
+      fprintf (fp, "%d ", *((int*)packet));
+      packet += sizeof(int);
+    }
+    fprintf (fp, "\n");
+    fprintf (fp, "Function names: \n");
+    for (int i = 0; i < n_funcs; i++) {
+      int len = *((int*)packet);
+      packet += sizeof(int);
+      fprintf (fp, "len: %d, ", len);
+      fprintf (fp, "%s\n", (char*)packet);
+      packet += len * sizeof(char);
+    }
+  }
+  packet = packet0;
+  printf ("*******************\n");
 }
 
 /**********************************************************************/

@@ -10,7 +10,7 @@
 void display_timestamp (long long ts, int len, char *func_name) {
   int seconds = ts / 1000000;
   int milli_seconds = (ts - seconds * 1000000) / 1000;
-  printf ("(%d)%d:%d %s\n", len, seconds, milli_seconds, len, func_name);
+  printf ("%4d:%2d %*s\n", seconds, milli_seconds, len, func_name);
 }
 
 bool keep_alive = true;
@@ -56,13 +56,13 @@ int main (int argc, char *argv[]) {
       if (n_entries > 0) {
         ts = (long long*) malloc (n_entries * sizeof(long long));
         for (int i = 0; i < n_entries; i++) {
-          ts[i] = *((long long*)packet); 
+          memcpy (&ts[i], (long long*)packet, sizeof(long long));
           packet += sizeof(long long);
         }
-        
+
         idents = (int*) malloc (n_entries * sizeof(int));
         for (int i = 0; i < n_entries; i++) {
-          idents[i] = *((int*)packet);
+          memcpy (&idents[i], (int*)packet, sizeof(int));
           packet += sizeof(int);
         }
       }
@@ -70,13 +70,17 @@ int main (int argc, char *argv[]) {
       for (int i = 0; i < n_entries; i++) {
         int s = *((int*)packet);
         packet += sizeof(int);
-        display_timestamp (ts[i] - t_first, idents[i], (char*)packet);
+        display_timestamp (ts[i] - t_first, s + idents[i], (char*)packet);
         packet += s * sizeof(char);
       }
 
       fflush(stdout);
       packet = packet0;
       free(packet);
+      if (n_entries > 0) {
+         free(ts);
+         free(idents);
+      }
     } else if (recv == VFTR_CLOSE) {
       printf ("The traced program terminated\n");
       keep_alive = false;
