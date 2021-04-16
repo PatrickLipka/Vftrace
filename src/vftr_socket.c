@@ -44,11 +44,15 @@ int vftr_n_funcs_to_send;
 char* vftr_funcs_to_send[VFTR_SOCK_BUFSIZE];
 long long vftr_socket_first_timestamp;
 long long vftr_timestamps_to_send[VFTR_SOCK_BUFSIZE];
+int vftr_idents[VFTR_SOCK_BUFSIZE];
+int vftr_socket_ident_level;
 
 /**********************************************************************/
 
 void vftr_create_packet (int *packet_size, char **packet) {
-  *packet_size = sizeof(int) + (vftr_n_funcs_to_send + 1) * sizeof(long long);
+  // Packet structure
+  *packet_size = (vftr_n_funcs_to_send + 1) * sizeof(int)
+               + (vftr_n_funcs_to_send + 1) * sizeof(long long);
   int *strlens = (int*)malloc (vftr_n_funcs_to_send * sizeof(int));
   for (int i = 0; i < vftr_n_funcs_to_send; i++) {
     strlens[i] = strlen(vftr_funcs_to_send[i]) + 1;
@@ -62,8 +66,10 @@ void vftr_create_packet (int *packet_size, char **packet) {
   *packet += sizeof(long long);
   if (vftr_n_funcs_to_send > 0) {
      memcpy (*packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
+     //*packet += vftr_n_funcs_to_send * sizeof(long long);
+     memcpy (*packet, vftr_idents, vftr_n_funcs_to_send * sizeof(int));
+     *packet += vftr_n_funcs_to_send * (sizeof(int) + sizeof(long long));
   }
-  *packet += vftr_n_funcs_to_send * sizeof(long long);
   for (int i = 0; i < vftr_n_funcs_to_send; i++) {
     memcpy (*packet, &strlens[i], sizeof(int));
     *packet += sizeof(int);
@@ -91,6 +97,7 @@ void *vftr_do_socket (void *arg) {
   struct sockaddr_un client_addr;
   socklen_t socklen = sizeof (client_addr);
   vftr_socket_first_timestamp = vftr_get_runtime_usec();
+  vftr_socket_ident_level = 0;
   while (true) {
     int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
     bool keep_open = connfd > 0;
@@ -177,6 +184,8 @@ void vftr_create_socket_thread () {
   vftr_n_funcs_to_send = 0;
   memset (vftr_funcs_to_send, -1, VFTR_SOCK_BUFSIZE * sizeof(int));
   memset (vftr_timestamps_to_send, -1, VFTR_SOCK_BUFSIZE * sizeof(long long));
+  memset (vftr_idents, -1, VFTR_SOCK_BUFSIZE * sizeof(int));
+  vftr_socket_ident_level = 0;
   pthread_mutex_init (&vftr_socket_lock_handle, NULL);
   pthread_create (&vftr_socket_thread, NULL, vftr_do_socket, NULL);
   while (true) {

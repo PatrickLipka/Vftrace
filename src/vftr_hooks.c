@@ -206,17 +206,21 @@ void vftr_function_entry (const char *s, void *addr, bool isPrecise) {
 
     if (vftr_mpirank == vftr_environment.live_rank->value) {
       pthread_mutex_lock (&vftr_socket_lock_handle);
+      vftr_socket_ident_level += 2;
       if (vftr_n_funcs_to_send < VFTR_SOCK_BUFSIZE) {
         vftr_funcs_to_send[vftr_n_funcs_to_send] = func->name;
         vftr_timestamps_to_send[vftr_n_funcs_to_send] = vftr_get_runtime_usec();
+        vftr_idents[vftr_n_funcs_to_send] = vftr_socket_ident_level;
         vftr_n_funcs_to_send++;
       } else {
         for (int i = 1; i < vftr_n_funcs_to_send; i++) {
           vftr_funcs_to_send[i-1] = vftr_funcs_to_send[i];
           vftr_timestamps_to_send[i-1] = vftr_timestamps_to_send[i];
+          vftr_idents[i-1] = vftr_idents[i];
         }
         vftr_funcs_to_send[vftr_n_funcs_to_send - 1] = func->name;
         vftr_timestamps_to_send[vftr_n_funcs_to_send - 1] = vftr_get_runtime_usec();
+        vftr_idents[vftr_n_funcs_to_send - 1] = vftr_socket_ident_level;
       }
       pthread_mutex_unlock (&vftr_socket_lock_handle);
     }
@@ -366,6 +370,11 @@ void vftr_function_exit () {
     vftr_overhead_usec += overhead_time_end - overhead_time_start;
     func->overhead += overhead_time_end - overhead_time_start;
     
+    if (vftr_mpirank == vftr_environment.live_rank->value) {
+      pthread_mutex_lock (&vftr_socket_lock_handle);
+      vftr_socket_ident_level -= 2;
+      pthread_mutex_unlock (&vftr_socket_lock_handle);
+    }
 
     /* Terminate Vftrace if we are exiting the main routine */
     // When exiting main, there is no return value.
@@ -381,7 +390,7 @@ void vftr_function_exit () {
     // the user time and the time measured by Vftrace.
     if (!vftr_fstack->return_to) vftr_finalize();
     func->open = false;
-    //vftr_connect_client();
+
 }
 
 // These are the actual Cygnus function hooks. 

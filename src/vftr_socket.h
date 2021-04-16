@@ -36,8 +36,10 @@ typedef struct vftr_socket {
 extern pthread_mutex_t vftr_socket_lock_handle;
 
 extern int vftr_n_funcs_to_send;
+extern int vftr_socket_ident_level;
 extern char *vftr_funcs_to_send[VFTR_SOCK_BUFSIZE];
 extern long long vftr_timestamps_to_send[VFTR_SOCK_BUFSIZE];
+extern int vftr_idents[VFTR_SOCK_BUFSIZE];
 
 extern bool vftr_socket_thread_active;
 extern vftr_socket_t vftr_serv;

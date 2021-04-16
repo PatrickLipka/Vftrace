@@ -7,10 +7,10 @@
 
 #include "vftr_socket.h"
 
-void display_timestamp (long long ts, char *func_name) {
+void display_timestamp (long long ts, int len, char *func_name) {
   int seconds = ts / 1000000;
   int milli_seconds = (ts - seconds * 1000000) / 1000;
-  printf ("%d:%d %s\n", seconds, milli_seconds, func_name);
+  printf ("(%d)%d:%d %s\n", len, seconds, milli_seconds, len, func_name);
 }
 
 bool keep_alive = true;
@@ -52,21 +52,28 @@ int main (int argc, char *argv[]) {
       long long t_first = *((long long*)packet);
       packet += sizeof(long long);
       long long *ts;
+      int *idents;
       if (n_entries > 0) {
         ts = (long long*) malloc (n_entries * sizeof(long long));
-        
         for (int i = 0; i < n_entries; i++) {
           ts[i] = *((long long*)packet); 
           packet += sizeof(long long);
         }
+        
+        idents = (int*) malloc (n_entries * sizeof(int));
+        for (int i = 0; i < n_entries; i++) {
+          idents[i] = *((int*)packet);
+          packet += sizeof(int);
+        }
       }
+ 
       for (int i = 0; i < n_entries; i++) {
         int s = *((int*)packet);
         packet += sizeof(int);
-        //printf ("%lld: %s\n", ts[i] - t_first, (char*)packet);
-        display_timestamp (ts[i] - t_first, (char*)packet);
+        display_timestamp (ts[i] - t_first, idents[i], (char*)packet);
         packet += s * sizeof(char);
       }
+
       fflush(stdout);
       packet = packet0;
       free(packet);
