@@ -158,9 +158,9 @@ void vftrace_allocate (const char *s, long long *addr, const int *n_elements, co
 
 /**********************************************************************/
 
-void vftrace_deallocate (const char *s) {
+void vftrace_deallocate (const char *s, long long *addr) {
    if (vftr_off() || vftr_paused || vftr_env_no_memtrace()) return;
-   int index = vftr_allocate_find_field (s, vftr_fstack->name);
+   int index = vftr_allocate_find_field (s, vftr_fstack->name, *addr);
    vftr_allocated_fields[index]->open = false;
    vftr_n_allocated_fields--;
 }
