@@ -34,6 +34,7 @@
 typedef struct allocate_list {
    char *name;
    char *caller;
+   long long addr;
    int n_calls;
    int stack_id;
    long long max_memory;
@@ -46,7 +47,6 @@ typedef struct allocate_list {
 
 #define INIT_ALLOC_LIST 1000
 #define ALLOC_LIST_INC 500
-//allocate_list_t *vftr_allocated_fields[INIT_ALLOC_LIST];
 allocate_list_t **vftr_allocated_fields;
 int vftr_allocate_list_size = 0;
 int vftr_n_allocated_fields = 0;
@@ -78,10 +78,11 @@ int vftr_compare_max_memory (const void *a1, const void *a2) {
 
 /**********************************************************************/
 
-void vftr_allocate_new_field (const char *name, const char *caller_function, int stack_id) {
+void vftr_allocate_new_field (const char *name, const char *caller_function, long long addr, int stack_id) {
    allocate_list_t *new_field = (allocate_list_t*) malloc (sizeof(allocate_list_t));
    new_field->name = strdup(name);
    new_field->caller = strdup(caller_function);
+   new_field->addr = addr;
    new_field->n_calls = 0;
    new_field->stack_id = stack_id;
    new_field->allocated_memory = 0;
@@ -100,13 +101,9 @@ void vftr_allocate_new_field (const char *name, const char *caller_function, int
 
 /**********************************************************************/
 
-int vftr_allocate_find_field (const char *name, const char *caller_function) {
-   char name_and_caller[strlen(name) + strlen(caller_function) + 1];
-   snprintf (name_and_caller, strlen(name) + strlen(caller_function) + 1, "%s%s", name, caller_function);
-   //uint64_t this_id = vftr_jenkins_murmur_64_hash (strlen(name), (uint8_t*)name);
-   uint64_t this_id = vftr_jenkins_murmur_64_hash (strlen(name_and_caller), (uint8_t*)name_and_caller);
+int vftr_allocate_find_field (const char *name, const char *caller_function, long long addr) {
    for (int i = vftr_max_allocated_fields - 1; i >=0; i--) {
-      if (this_id == vftr_allocated_fields[i]->id) return i;
+      if (addr == vftr_allocated_fields[i]->addr) return i;
    }
    return -1;
 }
@@ -141,15 +138,15 @@ void vftr_allocate_set_open_state (int index) {
 
 /**********************************************************************/
 
-void vftrace_allocate (const char *s, const int *n_elements, const int *element_size) {
+void vftrace_allocate (const char *s, long long *addr, const int *n_elements, const int *element_size) {
    if (vftr_off() || vftr_paused || vftr_env_no_memtrace()) return;
    if (vftr_allocate_list_size == 0) {
       vftr_allocate_list_size = INIT_ALLOC_LIST;
       vftr_allocated_fields = (allocate_list_t**)malloc (vftr_allocate_list_size * sizeof(allocate_list_t*));
    }
-   int index = vftr_allocate_find_field (s, vftr_fstack->name);
+   int index = vftr_allocate_find_field (s, vftr_fstack->name, *addr);
    if (index < 0) {
-      vftr_allocate_new_field (s, vftr_fstack->name, vftr_fstack->id);
+      vftr_allocate_new_field (s, vftr_fstack->name, *addr, vftr_fstack->id);
       index = vftr_max_allocated_fields - 1;
    } else {
       vftr_allocate_set_open_state (index);

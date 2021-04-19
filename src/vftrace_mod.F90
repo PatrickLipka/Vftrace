@@ -86,19 +86,21 @@ module vftrace
          character(c_char), intent(in) :: name(*)
       end subroutine vftrace_region_end_C
 
-      pure subroutine vftrace_allocate_C (name, n_elements, element_size) &
+      pure subroutine vftrace_allocate_C (name, addr, n_elements, element_size) &
          bind(c, name="vftrace_allocate")
-         use iso_c_binding, only: c_char, c_int
+         use iso_c_binding, only: c_char, c_int, c_long_long
          implicit none
          character(c_char), intent(in) :: name(*)
+         integer(c_long_long), intent(in) :: addr
          integer(c_int), intent(in) :: n_elements
          integer(c_int), intent(in) :: element_size
       end subroutine vftrace_allocate_C
   
-      pure subroutine vftrace_deallocate_C (name) bind(c, name="vftrace_deallocate")
-         use iso_c_binding, only: c_char
+      pure subroutine vftrace_deallocate_C (name, addr) bind(c, name="vftrace_deallocate")
+         use iso_c_binding, only: c_char, c_long_long
          implicit none
          character(c_char), intent(in) :: name(*)
+         integer(c_long_long), intent(in) :: addr
       end subroutine
    end interface
 
@@ -175,11 +177,12 @@ contains
       end do
    end function vftrace_get_stack
 
-   pure subroutine vftrace_allocate (name, n_elements, element_size)
-     use iso_c_binding, only: c_char, c_null_char, c_int
+   pure subroutine vftrace_allocate (name, addr, n_elements, element_size)
+     use iso_c_binding, only: c_char, c_null_char, c_int, c_long_long
      use iso_fortran_env, only: int64
      implicit none
      character(len=*), intent(in) :: name
+     integer(kind=int64), intent(in) :: addr
      integer(kind=int64), intent(in) :: n_elements
      integer, intent(in) :: element_size
      integer :: name_len, index_len
@@ -189,21 +192,23 @@ contains
      allocate (character(len=name_len) :: c_name)
      c_name(:) = adjustl(trim(name))
      c_name(name_len:name_len) = c_null_char
-     call vftrace_allocate_C (c_name, int(n_elements, c_int), int(element_size, c_int))
+     call vftrace_allocate_C (c_name, int(addr, c_long_long), int(n_elements, c_int), int(element_size, c_int))
      deallocate (c_name)
    end subroutine vftrace_allocate
 
-   pure subroutine vftrace_deallocate (name)
-     use iso_c_binding, only: c_char, c_null_char
+   pure subroutine vftrace_deallocate (name, addr)
+     use iso_c_binding, only: c_char, c_null_char, c_long_long
+     use iso_fortran_env, only: int64
      implicit none
      character(len=*), intent(in) :: name
+     integer(kind=int64), intent(in) :: addr
      integer :: name_len
      character(kind=c_char,len=:), allocatable :: c_name
      name_len = len(adjustl(trim(name))) + 1
      allocate (character(len=name_len) :: c_name)
      c_name(:) = adjustl(trim(name))
      c_name(name_len:name_len) = c_null_char
-     call vftrace_deallocate_C (c_name)
+     call vftrace_deallocate_C (c_name, int(addr, c_long_long))
      deallocate (c_name)
    end subroutine
 end module vftrace
