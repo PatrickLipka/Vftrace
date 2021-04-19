@@ -167,11 +167,11 @@ def construct_vftrace_allocate_call (field):
     if i + 1 < len(dims):
       dim_string += "*"
   # return "call vftrace_allocate(\"" + name + "\", int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
-  return "call vftrace_allocate(\"" + name + "\", loc(int(" + name + "),int64), int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
+  return "call vftrace_allocate(\"" + name + "\", int(loc(" + name + "),int64), int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
 
 def construct_vftrace_deallocate_call (field):
   # The input is simply the field name.
-  return "call vftrace_deallocate(\"" + field + "\", loc(int(" + field  + "),int64))\n"
+  return "call vftrace_deallocate(\"" + field + "\", int(loc(" + field  + "),int64))\n"
 
 def remove_trailing_comment(line):
   first_1 = line.find("!")
