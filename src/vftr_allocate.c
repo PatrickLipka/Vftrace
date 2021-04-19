@@ -167,6 +167,17 @@ void vftrace_deallocate (const char *s, long long *addr) {
 
 /**********************************************************************/
 
+void vftr_check_unfreed_fields (FILE *fp) {
+  if (vftr_n_allocated_fields > 0) {
+    fprintf (fp, "There are un-freed fields: %d\n", vftr_n_allocated_fields);
+    for (int i = 0; i < vftr_max_allocated_fields; i++) {
+      if (vftr_allocated_fields[i]->open) fprintf (fp, "%s (%s)\n", vftr_allocated_fields[i]->name, vftr_allocated_fields[i]->caller);
+    }
+  } 
+}
+
+/**********************************************************************/
+
 void vftr_allocate_finalize (FILE *fp) {
 
    if (vftr_mpisize > 1) {
@@ -356,9 +367,9 @@ void vftr_allocate_finalize (FILE *fp) {
    }
    for (int i = 0; i < table_width; i++) fprintf (fp, "-");
    fprintf (fp, "\n");
+
+   vftr_check_unfreed_fields(fp);
 }
 
 /**********************************************************************/
-
-
 
