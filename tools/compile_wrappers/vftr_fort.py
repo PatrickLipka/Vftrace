@@ -13,11 +13,12 @@ subroutine_pattern = re.compile(r"^[\S\s]*(pure[\s]+)?(elemental[\s]+)?subroutin
 function_pattern = re.compile(r"^[\S\s]*(pure[\s]+)?(elemental[\s]+)?function[\s]+[\S]*[ ]*(\()?", re.IGNORECASE)
 end_routine_pattern = re.compile(r"[ ]*end[ ]*(function|subroutine)", re.IGNORECASE)
 if_pattern = re.compile(r"^[ ]*if([\S\s]*)[\S\s]*", re.IGNORECASE)
+program_pattern = re.compile(r"^[\S\s]*program[\s]+[\S]*", re.IGNORECASE)
 
 vftrace_wrapper_marker = "!!! VFTRACE 1.3 - Wrapper inserted malloc-trace calls\n"
 
-def check_if_if_statement (line):
-  if if_pattern.match(line):
+def check_if_if_statement (line, force=False):
+  if if_pattern.match(line) or force:
     # Remove white spaces and check if the last character is an ampersand.
     s = re.sub(r"\s+", "", line)
     if s[-1] == "&":
@@ -165,11 +166,12 @@ def construct_vftrace_allocate_call (field):
       dim_string += dim
     if i + 1 < len(dims):
       dim_string += "*"
-  return "call vftrace_allocate(\"" + name + "\", int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
+  # return "call vftrace_allocate(\"" + name + "\", int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
+  return "call vftrace_allocate(\"" + name + "\", loc(int(" + name + "),int64), int(" + dim_string + ",int64), storage_size(" + name + ")/8)\n"
 
 def construct_vftrace_deallocate_call (field):
   # The input is simply the field name.
-  return "call vftrace_deallocate(\"" + field + "\")\n"
+  return "call vftrace_deallocate(\"" + field + "\", loc(int(" + field  + "),int64))\n"
 
 def remove_trailing_comment(line):
   first_1 = line.find("!")
@@ -274,11 +276,24 @@ with open(filename_in, "r") as f_in, open(filename_out, "w") as f_out:
         elif is_dealloc:
           f_out.write (construct_vftrace_deallocate_call(field))
     elif is_open_if_statement == 2:
-      #line = append_if_then(re.sub(r"&", " then", line))
-      re.sub(r"&", " then", line)
-      is_open_if_statement -= 1
+      replace = False
+      tmp = i_line 
+      while (line_to_be_continued(all_lines[tmp])):
+        tmp += 1
+      if tmp == i_line:
+        replace = True 
+      else:
+        s = re.sub(r"\s+", "", all_lines[tmp]).lower()
+        replace = s[-4:] != "then"
+
+      if replace:      
+        line = re.sub(r"&", " then", line)
+        is_open_if_statement = 1
+      else:
+        is_open_if_statement = -1
+       
     elif is_open_if_statement == 1:
-      f_out.write("end if")
+      line += "\nend if"
       is_open_if_statement -= 1
 
     f_out.write (line)
