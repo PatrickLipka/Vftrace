@@ -46,12 +46,15 @@ long long vftr_socket_first_timestamp;
 long long vftr_timestamps_to_send[VFTR_SOCK_BUFSIZE];
 int vftr_idents[VFTR_SOCK_BUFSIZE];
 int vftr_socket_ident_level;
+int vftr_socket_it_count;
+int vftr_its[VFTR_SOCK_BUFSIZE];
+char *vftr_socket_recent_func;
 
 /**********************************************************************/
 
 void vftr_create_packet (int *packet_size, char **packet) {
   // Packet structure
-  *packet_size = (vftr_n_funcs_to_send + 1) * sizeof(int)
+  *packet_size = (2 * vftr_n_funcs_to_send + 1) * sizeof(int)
                + (vftr_n_funcs_to_send + 1) * sizeof(long long);
   int *strlens = (int*)malloc (vftr_n_funcs_to_send * sizeof(int));
   for (int i = 0; i < vftr_n_funcs_to_send; i++) {
@@ -68,6 +71,8 @@ void vftr_create_packet (int *packet_size, char **packet) {
      memcpy (*packet, vftr_timestamps_to_send, vftr_n_funcs_to_send * sizeof(long long));
      *packet += vftr_n_funcs_to_send * sizeof(long long);
      memcpy (*packet, vftr_idents, vftr_n_funcs_to_send * sizeof(int));
+     *packet += vftr_n_funcs_to_send * sizeof(int);
+     memcpy (*packet, vftr_its, vftr_n_funcs_to_send * sizeof(int));
      *packet += vftr_n_funcs_to_send * sizeof(int);
   }
   for (int i = 0; i < vftr_n_funcs_to_send; i++) {
@@ -134,6 +139,8 @@ void *vftr_do_socket (void *arg) {
   socklen_t socklen = sizeof (client_addr);
   vftr_socket_first_timestamp = vftr_get_runtime_usec();
   vftr_socket_ident_level = 0;
+  vftr_socket_it_count = 0;
+  vftr_socket_recent_func = "";
   while (true) {
     int connfd = accept (vftr_serv.fd, (struct sockaddr *) &client_addr, &socklen); 
     bool keep_open = connfd > 0;

@@ -40,6 +40,9 @@ extern int vftr_socket_ident_level;
 extern char *vftr_funcs_to_send[VFTR_SOCK_BUFSIZE];
 extern long long vftr_timestamps_to_send[VFTR_SOCK_BUFSIZE];
 extern int vftr_idents[VFTR_SOCK_BUFSIZE];
+extern int vftr_socket_it_count;
+extern int vftr_its[VFTR_SOCK_BUFSIZE];
+extern char *vftr_socket_recent_func;
 
 extern bool vftr_socket_thread_active;
 extern vftr_socket_t vftr_serv;

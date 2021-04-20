@@ -7,10 +7,22 @@
 
 #include "vftr_socket.h"
 
-void display_timestamp (long long ts, int len, char *func_name) {
+void display_timestamp (long long ts, int len, char *func_name, int it_count) {
   int seconds = ts / 1000000;
   int milli_seconds = (ts - seconds * 1000000) / 1000;
-  printf ("%4d:%2d %*s\n", seconds, milli_seconds, len, func_name);
+  //if (it_count == 1) {
+  //  printf ("\n");
+  //} else {
+  //  printf ("\r");
+  //}
+  //printf ("%4d:%2d %*s %d\n", seconds, milli_seconds, len, func_name, it_count);
+  printf ("%4d:%2d %*s", seconds, milli_seconds, len, func_name);
+
+  if (it_count > 1) {
+    printf (" x %d\r", it_count);
+  } else {
+    printf ("\n");
+  }
 }
 
 bool keep_alive = true;
@@ -52,7 +64,7 @@ int main (int argc, char *argv[]) {
       long long t_first = *((long long*)packet);
       packet += sizeof(long long);
       long long *ts;
-      int *idents;
+      int *idents, *it_counts;
       if (n_entries > 0) {
         ts = (long long*) malloc (n_entries * sizeof(long long));
         for (int i = 0; i < n_entries; i++) {
@@ -65,12 +77,18 @@ int main (int argc, char *argv[]) {
           memcpy (&idents[i], (int*)packet, sizeof(int));
           packet += sizeof(int);
         }
+
+        it_counts = (int*) malloc (n_entries * sizeof(int));
+        for (int i = 0; i < n_entries; i++) {
+          memcpy (&it_counts[i], (int*)packet, sizeof(int));
+          packet += sizeof(int);
+        }
       }
  
       for (int i = 0; i < n_entries; i++) {
         int s = *((int*)packet);
         packet += sizeof(int);
-        display_timestamp (ts[i] - t_first, s + idents[i], (char*)packet);
+        display_timestamp (ts[i] - t_first, s + idents[i], (char*)packet, it_counts[i]);
         packet += s * sizeof(char);
       }
 
@@ -80,6 +98,7 @@ int main (int argc, char *argv[]) {
       if (n_entries > 0) {
          free(ts);
          free(idents);
+         free(it_counts);
       }
     } else if (recv == VFTR_CLOSE) {
       printf ("The traced program terminated\n");
