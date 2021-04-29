@@ -16,7 +16,8 @@ libvftr_f08mpiwrap_la_SOURCES += send.F90 \
                                  issend.F90 \
                                  rsend.F90 \
                                  irsend.F90 \
-                                 recv.F90
+                                 recv.F90 \
+                                 sendrecv.F90
 
 #########
 # tests #
