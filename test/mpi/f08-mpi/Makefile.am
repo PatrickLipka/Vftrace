@@ -72,7 +72,7 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
                       init_finalize-4.sh \
                       f08types.sh \
                       derived_f08types.sh \
-		      pcontrol.sh
+                      pcontrol.sh
 
 #########################
 ## point to point tests #
