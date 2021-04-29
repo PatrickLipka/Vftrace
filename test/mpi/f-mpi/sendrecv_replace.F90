@@ -1,4 +1,4 @@
-PROGRAM sendrecv
+PROGRAM sendrecv_replace
 
    USE, INTRINSIC :: ISO_FORTRAN_ENV
    USE mpi
@@ -39,7 +39,7 @@ PROGRAM sendrecv
 
    ! require cmd-line argument
    IF (COMMAND_ARGUMENT_COUNT() < 1) THEN
-      WRITE(UNIT=OUTPUT_UNIT, FMT="(A)") "./send_recv <msgsize in integers>"
+      WRITE(UNIT=OUTPUT_UNIT, FMT="(A)") "./sendrecv_replace <msgsize in integers>"
       STOP 1
    END IF
 
@@ -72,4 +72,4 @@ PROGRAM sendrecv
    CALL MPI_Finalize(ierr)
 
    IF (.NOT.valid_data) STOP 1
-END PROGRAM sendrecv
+END PROGRAM sendrecv_replace
