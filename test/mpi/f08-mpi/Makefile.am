@@ -35,7 +35,8 @@ check_PROGRAMS = init_finalize_1 \
 		 init_finalize_3 \
 		 init_finalize_4 \
                  f08types \
-                 derived_f08types
+                 derived_f08types \
+                 pcontrol
 		
 init_finalize_1_SOURCES = $(srcdir)/init_finalize.F90
 init_finalize_1_FCFLAGS = $(AM_FCFLAGS)
@@ -61,12 +62,17 @@ derived_f08types_SOURCES = $(srcdir)/derived_f08types.F90
 derived_f08types_FCFLAGS = $(AM_FCFLAGS)
 derived_f08types_LDFLAGS = $(AM_LDFLAGS)
 
+pcontrol_SOURCES = $(srcdir)/pcontrol.F90
+pcontrol_FCFLAGS  = $(AM_FCFLAGS)
+pcontrol_LDFLAGS = $(AM_LDFLAGS)
+
 dist_noinst_SCRIPTS = init_finalize-1.sh \
                       init_finalize-2.sh \
                       init_finalize-3.sh \
                       init_finalize-4.sh \
                       f08types.sh \
-                      derived_f08types.sh
+                      derived_f08types.sh \
+		      pcontrol.sh
 
 #########################
 ## point to point tests #
