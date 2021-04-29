@@ -86,8 +86,8 @@ check_PROGRAMS += send_recv \
                   rsend_recv \
                   irsend_recv \
                   send_irecv \
-                  sendrecv
-#                  sendrecv_replace \
+                  sendrecv \
+                  sendrecv_replace 
 #                  probe \
 #                  iprobe
 
@@ -131,10 +131,10 @@ sendrecv_SOURCES = $(srcdir)/sendrecv.F90
 sendrecv_FCFLAGS = $(AM_FCFLAGS)
 sendrecv_LDFLAGS = $(AM_LDFLAGS)
 
-#sendrecv_replace_SOURCES = $(srcdir)/sendrecv_replace.F90
-#sendrecv_replace_FCFLAGS = $(AM_FCFLAGS)
-#sendrecv_replace_LDFLAGS = $(AM_LDFLAGS)
-#
+sendrecv_replace_SOURCES = $(srcdir)/sendrecv_replace.F90
+sendrecv_replace_FCFLAGS = $(AM_FCFLAGS)
+sendrecv_replace_LDFLAGS = $(AM_LDFLAGS)
+
 #probe_SOURCES = $(srcdir)/probe.F90
 #probe_FCFLAGS = $(AM_FCFLAGS)
 #probe_LDFLAGS = $(AM_LDFLAGS)
@@ -152,8 +152,8 @@ dist_noinst_SCRIPTS += send_recv.sh \
                        rsend_recv.sh \
                        irsend_recv.sh \
                        send_irecv.sh \
-                       sendrecv.sh 
-#                       sendrecv_replace.sh \
+                       sendrecv.sh \
+                       sendrecv_replace.sh 
 #                       isend_recv.sh \
 #                       send_irecv.sh
 
