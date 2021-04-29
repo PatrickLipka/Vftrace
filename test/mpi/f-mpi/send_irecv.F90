@@ -1,4 +1,4 @@
-PROGRAM send_recv
+PROGRAM send_irecv
 
    USE, INTRINSIC :: ISO_FORTRAN_ENV
    USE mpi
@@ -94,4 +94,4 @@ PROGRAM send_recv
    CALL MPI_Finalize(ierr)
 
    IF (.NOT.valid_data) STOP 1
-END PROGRAM send_recv
+END PROGRAM send_irecv
