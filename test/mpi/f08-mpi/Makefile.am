@@ -78,7 +78,8 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 # point to point tests #
 ########################
 check_PROGRAMS += send_recv \
-                  bsend_recv 
+                  bsend_recv \
+                  ssend_recv
 #                  sendrecv \
 #                  sendrecv_replace \
 #                  isend_recv \
@@ -99,11 +100,11 @@ bsend_recv_LDFLAGS = $(AM_LDFLAGS)
 #ibsend_recv_SOURCES = $(srcdir)/ibsend_recv.F90
 #ibsend_recv_FCFLAGS = $(AM_FCFLAGS)
 #ibsend_recv_LDFLAGS = $(AM_LDFLAGS)
-#
-#ssend_recv_SOURCES = $(srcdir)/ssend_recv.F90
-#ssend_recv_FCFLAGS = $(AM_FCFLAGS)
-#ssend_recv_LDFLAGS = $(AM_LDFLAGS)
-#
+
+ssend_recv_SOURCES = $(srcdir)/ssend_recv.F90
+ssend_recv_FCFLAGS = $(AM_FCFLAGS)
+ssend_recv_LDFLAGS = $(AM_LDFLAGS)
+
 #issend_recv_SOURCES = $(srcdir)/issend_recv.F90
 #issend_recv_FCFLAGS = $(AM_FCFLAGS)
 #issend_recv_LDFLAGS = $(AM_LDFLAGS)
@@ -137,7 +138,8 @@ bsend_recv_LDFLAGS = $(AM_LDFLAGS)
 #iprobe_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += send_recv.sh \
-                       bsend_recv.sh 
+                       bsend_recv.sh \
+                       ssend_recv.sh
 #                       sendrecv.sh \
 #                       sendrecv_replace.sh \
 #                       isend_recv.sh \
