@@ -37,9 +37,9 @@ void vftr_MPI_Recv_f082c(void *buf, MPI_Fint *count, MPI_Fint *f_datatype,
                               c_comm,
                               &c_status);
 
-//   if (f_status != MPI_F08_STATUS_IGNORE) {
+//TODO:ENABLE   if (f_status != MPI_F08_STATUS_IGNORE) {
       PMPI_Status_c2f08(&c_status, f_status);
-//   }
+//TODO:ENABLE   }
 
    *f_error = (MPI_Fint) (c_error);
 }
