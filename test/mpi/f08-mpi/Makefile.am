@@ -78,6 +78,7 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 # point to point tests #
 ########################
 check_PROGRAMS += send_recv \
+                  isend_recv \
                   bsend_recv \
                   ssend_recv \
                   rsend_recv
@@ -90,9 +91,9 @@ send_recv_SOURCES = $(srcdir)/send_recv.F90
 send_recv_FCFLAGS = $(AM_FCFLAGS)
 send_recv_LDFLAGS = $(AM_LDFLAGS)
 
-#isend_recv_SOURCES = $(srcdir)/isend_recv.F90
-#isend_recv_FCFLAGS = $(AM_FCFLAGS)
-#isend_recv_LDFLAGS = $(AM_LDFLAGS)
+isend_recv_SOURCES = $(srcdir)/isend_recv.F90
+isend_recv_FCFLAGS = $(AM_FCFLAGS)
+isend_recv_LDFLAGS = $(AM_LDFLAGS)
 
 bsend_recv_SOURCES = $(srcdir)/bsend_recv.F90
 bsend_recv_FCFLAGS = $(AM_FCFLAGS)
@@ -139,6 +140,7 @@ rsend_recv_LDFLAGS = $(AM_LDFLAGS)
 #iprobe_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += send_recv.sh \
+                       isend_recv.sh \
                        bsend_recv.sh \
                        ssend_recv.sh \
                        rsend_recv.sh
