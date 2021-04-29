@@ -86,7 +86,7 @@ check_PROGRAMS += send_recv \
 #                  send_irecv
 
 send_recv_SOURCES = $(srcdir)/send_recv.F90
-send_recv_FCFLAGS  = $(AM_FCFLAGS)
+send_recv_FCFLAGS = $(AM_FCFLAGS)
 send_recv_LDFLAGS = $(AM_LDFLAGS)
 
 #isend_recv_SOURCES = $(srcdir)/isend_recv.F90
@@ -122,11 +122,11 @@ ssend_recv_LDFLAGS = $(AM_LDFLAGS)
 #send_irecv_LDFLAGS = $(AM_LDFLAGS)
 #
 #sendrecv_SOURCES = $(srcdir)/sendrecv.F90
-#sendrecv_FCFLAGS  = $(AM_FCFLAGS)
+#sendrecv_FCFLAGS = $(AM_FCFLAGS)
 #sendrecv_LDFLAGS = $(AM_LDFLAGS)
 #
 #sendrecv_replace_SOURCES = $(srcdir)/sendrecv_replace.F90
-#sendrecv_replace_FCFLAGS  = $(AM_FCFLAGS)
+#sendrecv_replace_FCFLAGS = $(AM_FCFLAGS)
 #sendrecv_replace_LDFLAGS = $(AM_LDFLAGS)
 #
 #probe_SOURCES = $(srcdir)/probe.F90
