@@ -1,9 +1,9 @@
 bin_PROGRAMS = vftrace_vfd_dump \
-	       vftrace_show_function_stacks \
-	       vftrace_mpi_table_crosscheck \
-	       vftrace_mpi_stack_crosscheck \
-	       vftrace_filter_stacks \
-	       vftrace_diff_profiles
+               vftrace_show_function_stacks \
+               vftrace_mpi_table_crosscheck \
+               vftrace_mpi_stack_crosscheck \
+               vftrace_filter_stacks \
+               vftrace_diff_profiles
 
 vftrace_mpi_table_crosscheck_SOURCES = vftrace_mpi_table_crosscheck.c
 vftrace_mpi_stack_crosscheck_SOURCES = vftrace_mpi_stack_crosscheck.c

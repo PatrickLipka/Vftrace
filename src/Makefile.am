@@ -6,10 +6,10 @@ include_HEADERS = vftrace.h
 SUBDIRS = mpi
 
 external_includes = -I$(top_srcdir)/external/tinyexpr/ \
-		    -I$(top_srcdir)/external/jsmn/
+                    -I$(top_srcdir)/external/jsmn/
 
 libvftrace_la_LIBADD = libvftr_pause.la \
-		       mpi/vftr_mpi/libvftr_mpi.la
+                       mpi/vftr_mpi/libvftr_mpi.la
 # external libraries
 libvftrace_la_LIBADD += ${top_builddir}/external/libtinyexpr.la
 
@@ -17,10 +17,10 @@ if WITH_MPI
 libvftrace_la_LIBADD += mpi/c-wrapper/libvftr_cmpiwrap.la
 if ENABLE_FORTRAN
 libvftrace_la_LIBADD += mpi/f-wrapper/libvftr_fmpiwrap.la \
-			mpi/f2c/libvftr_mpi_f2c.la
+                        mpi/f2c/libvftr_mpi_f2c.la
 if ENABLE_FORTRAN08
 libvftrace_la_LIBADD += mpi/f08-wrapper/libvftr_f08mpiwrap.la \
-			mpi/f082c/libvftr_mpi_f082c.la
+                        mpi/f082c/libvftr_mpi_f082c.la
 endif
 endif
 endif
@@ -29,26 +29,26 @@ libvftr_pause_la_SOURCES = vftr_pause.c
 libvftr_pause_la_CFLAGS = -finstrument-functions
 
 libvftrace_la_SOURCES = demangle.cpp \
-		       vftr_scenarios.c \
-		       vftr_symbols.c \
-                       vftr_hwcounters.c \
-		       vftr_hooks.c \
-		       vftr_setup.c \
-		       vftr_filewrite.c \
-		       vftr_fileutils.c \
-		       vftr_stringutils.c \
-		       vftr_hashing.c \
-		       vftr_sorting.c \
-		       vftr_stacks.c \
-		       vftr_user_stack.c \
-		       vftr_functions.c \
-		       vftr_regions.c \
-                       vftr_allocate.c \
- 		       vftr_timer.c \
-		       vftr_regex.c \
-	 	       vftr_environment.c \
-		       vftr_signals.c \
-		       vftr_browse.c
+                        vftr_scenarios.c \
+                        vftr_symbols.c \
+                        vftr_hwcounters.c \
+                        vftr_hooks.c \
+                        vftr_setup.c \
+                        vftr_filewrite.c \
+                        vftr_fileutils.c \
+                        vftr_stringutils.c \
+                        vftr_hashing.c \
+                        vftr_sorting.c \
+                        vftr_stacks.c \
+                        vftr_user_stack.c \
+                        vftr_functions.c \
+                        vftr_regions.c \
+                        vftr_allocate.c \
+                        vftr_timer.c \
+                        vftr_regex.c \
+                        vftr_environment.c \
+                        vftr_signals.c \
+                        vftr_browse.c
 if ENABLE_FORTRAN
 libvftrace_la_SOURCES += vftrace_mod.F90
 endif
@@ -59,7 +59,7 @@ libvftrace_la_FCFLAGS =
 libvftrace_la_LDFLAGS =
 
 libvftrace_la_CFLAGS += -I${srcdir}/mpi/vftr_mpi/ \
-			${external_includes}
+                        ${external_includes}
 
 if ENABLE_HWC
 libvftrace_la_CFLAGS += -DHAS_HWC

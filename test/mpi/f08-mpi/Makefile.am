@@ -31,13 +31,13 @@ endif
 # System Tests #
 ################
 check_PROGRAMS = init_finalize_1 \
-		 init_finalize_2 \
-		 init_finalize_3 \
-		 init_finalize_4 \
+                 init_finalize_2 \
+                 init_finalize_3 \
+                 init_finalize_4 \
                  f08types \
                  derived_f08types \
                  pcontrol
-		
+
 init_finalize_1_SOURCES = $(srcdir)/init_finalize.F90
 init_finalize_1_FCFLAGS = $(AM_FCFLAGS)
 init_finalize_1_LDFLAGS = $(AM_LDFLAGS)
@@ -78,10 +78,10 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 ## point to point tests #
 #########################
 #check_PROGRAMS += send_recv \
-#		   sendrecv \
-#		   sendrecv_replace \
-#		   isend_recv \
-#		   send_irecv
+#                  sendrecv \
+#                  sendrecv_replace \
+#                  isend_recv \
+#                  send_irecv
 #
 #send_recv_SOURCES = $(srcdir)/send_recv.F90
 #send_recv_FCFLAGS  = $(AM_FCFLAGS)
@@ -104,45 +104,45 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 #send_irecv_LDFLAGS = $(AM_LDFLAGS)
 #
 #dist_noinst_SCRIPTS += send_recv.sh \
-#		       sendrecv.sh \
-#		       sendrecv_replace.sh \
-#		       isend_recv.sh \
-#		       send_irecv.sh
+#                       sendrecv.sh \
+#                       sendrecv_replace.sh \
+#                       isend_recv.sh \
+#                       send_irecv.sh
 
 #####################
 ## Collective tests #
 #####################
 
 check_PROGRAMS += barrier \
-		  bcast \
-		  bcast_intercom \
-		  gather \
-		  gather_intercom \
-		  gather_inplace \
-		  gatherv \
-		  gatherv_intercom \
-		  gatherv_inplace \
-		  scatter \
-		  scatter_intercom \
-		  scatter_inplace \
-		  scatterv \
-		  scatterv_intercom \
-		  scatterv_inplace \
-		  allgather \
-		  allgather_intercom \
-		  allgather_inplace \
-		  allgatherv \
-		  allgatherv_intercom \
-		  allgatherv_inplace \
-		  alltoall \
-		  alltoall_intercom \
-		  alltoall_inplace \
-		  alltoallv \
-		  alltoallv_intercom \
-		  alltoallv_inplace \
-		  alltoallw \
-		  alltoallw_intercom \
-		  alltoallw_inplace
+                  bcast \
+                  bcast_intercom \
+                  gather \
+                  gather_intercom \
+                  gather_inplace \
+                  gatherv \
+                  gatherv_intercom \
+                  gatherv_inplace \
+                  scatter \
+                  scatter_intercom \
+                  scatter_inplace \
+                  scatterv \
+                  scatterv_intercom \
+                  scatterv_inplace \
+                  allgather \
+                  allgather_intercom \
+                  allgather_inplace \
+                  allgatherv \
+                  allgatherv_intercom \
+                  allgatherv_inplace \
+                  alltoall \
+                  alltoall_intercom \
+                  alltoall_inplace \
+                  alltoallv \
+                  alltoallv_intercom \
+                  alltoallv_inplace \
+                  alltoallw \
+                  alltoallw_intercom \
+                  alltoallw_inplace
 
 barrier_SOURCES = $(srcdir)/barrier.F90
 barrier_FCFLAGS = $(AM_FCFLAGS)
@@ -265,56 +265,56 @@ alltoallw_inplace_FCFLAGS = $(AM_FCFLAGS)
 alltoallw_inplace_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += barrier.sh \
-		       bcast.sh \
-		       bcast_intercom.sh \
-		       gather.sh \
-		       gather_intercom.sh \
-		       gather_inplace.sh \
-		       gatherv.sh \
-		       gatherv_intercom.sh \
-		       gatherv_inplace.sh \
-		       scatter.sh \
-		       scatter_intercom.sh \
-		       scatter_inplace.sh \
-		       scatterv.sh \
-		       scatterv_intercom.sh \
-		       scatterv_inplace.sh \
-		       allgather.sh \
-		       allgather_intercom.sh \
-		       allgather_inplace.sh \
-		       allgatherv.sh \
-		       allgatherv_intercom.sh \
-		       allgatherv_inplace.sh \
-		       alltoall.sh \
-		       alltoall_intercom.sh \
-		       alltoall_inplace.sh \
-		       alltoallv.sh \
-		       alltoallv_intercom.sh \
-		       alltoallv_inplace.sh \
-		       alltoallw.sh \
-		       alltoallw_intercom.sh \
-		       alltoallw_inplace.sh
+                       bcast.sh \
+                       bcast_intercom.sh \
+                       gather.sh \
+                       gather_intercom.sh \
+                       gather_inplace.sh \
+                       gatherv.sh \
+                       gatherv_intercom.sh \
+                       gatherv_inplace.sh \
+                       scatter.sh \
+                       scatter_intercom.sh \
+                       scatter_inplace.sh \
+                       scatterv.sh \
+                       scatterv_intercom.sh \
+                       scatterv_inplace.sh \
+                       allgather.sh \
+                       allgather_intercom.sh \
+                       allgather_inplace.sh \
+                       allgatherv.sh \
+                       allgatherv_intercom.sh \
+                       allgatherv_inplace.sh \
+                       alltoall.sh \
+                       alltoall_intercom.sh \
+                       alltoall_inplace.sh \
+                       alltoallv.sh \
+                       alltoallv_intercom.sh \
+                       alltoallv_inplace.sh \
+                       alltoallw.sh \
+                       alltoallw_intercom.sh \
+                       alltoallw_inplace.sh
 
 #####################
 # Global reductions #
 #####################
 
 check_PROGRAMS += reduce \
-		  reduce_intercom \
-		  reduce_inplace \
-		  allreduce \
-		  allreduce_intercom \
-		  allreduce_inplace \
-		  reduce_scatter_block \
-		  reduce_scatter_block_intercom \
-		  reduce_scatter_block_inplace \
-		  reduce_scatter \
-		  reduce_scatter_intercom \
-		  reduce_scatter_inplace \
-		  scan \
-		  scan_inplace \
-		  exscan \
-		  exscan_inplace 
+                  reduce_intercom \
+                  reduce_inplace \
+                  allreduce \
+                  allreduce_intercom \
+                  allreduce_inplace \
+                  reduce_scatter_block \
+                  reduce_scatter_block_intercom \
+                  reduce_scatter_block_inplace \
+                  reduce_scatter \
+                  reduce_scatter_intercom \
+                  reduce_scatter_inplace \
+                  scan \
+                  scan_inplace \
+                  exscan \
+                  exscan_inplace 
 
 reduce_SOURCES = $(srcdir)/reduce.F90
 reduce_FCFLAGS = $(AM_FCFLAGS)
@@ -381,31 +381,31 @@ exscan_inplace_FCFLAGS = $(AM_FCFLAGS)
 exscan_inplace_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += reduce.sh \
-		       reduce_intercom.sh \
-		       reduce_inplace.sh \
-		       allreduce.sh \
-		       allreduce_intercom.sh \
-		       allreduce_inplace.sh \
-		       reduce_scatter_block.sh \
-		       reduce_scatter_block_intercom.sh \
-		       reduce_scatter_block_inplace.sh \
-		       reduce_scatter.sh \
-		       reduce_scatter_intercom.sh \
-		       reduce_scatter_inplace.sh \
-		       scan.sh \
-		       scan_inplace.sh \
-		       exscan.sh \
-		       exscan_inplace.sh 
+                       reduce_intercom.sh \
+                       reduce_inplace.sh \
+                       allreduce.sh \
+                       allreduce_intercom.sh \
+                       allreduce_inplace.sh \
+                       reduce_scatter_block.sh \
+                       reduce_scatter_block_intercom.sh \
+                       reduce_scatter_block_inplace.sh \
+                       reduce_scatter.sh \
+                       reduce_scatter_intercom.sh \
+                       reduce_scatter_inplace.sh \
+                       scan.sh \
+                       scan_inplace.sh \
+                       exscan.sh \
+                       exscan_inplace.sh 
 
 ###################
 # One sided tests #
 ###################
 check_PROGRAMS += put \
-		  get \
-		  accumulate \
-		  get_accumulate \
-		  fetch_and_op \
-		  compare_and_swap
+                  get \
+                  accumulate \
+                  get_accumulate \
+                  fetch_and_op \
+                  compare_and_swap
 
 put_SOURCES = $(srcdir)/put.F90
 put_FCFLAGS = $(AM_FCFLAGS)
@@ -432,19 +432,19 @@ compare_and_swap_FCFLAGS = $(AM_FCFLAGS)
 compare_and_swap_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += put.sh \
-		       get.sh \
-		       accumulate.sh \
-		       get_accumulate.sh \
-		       fetch_and_op.sh \
-		       compare_and_swap.sh
+                       get.sh \
+                       accumulate.sh \
+                       get_accumulate.sh \
+                       fetch_and_op.sh \
+                       compare_and_swap.sh
 
 ###############
 ## Test tests #
 ###############
 #check_PROGRAMS += test \
-#		   testany \
-#		   testsome \
-#		   testall
+#                   testany \
+#                   testsome \
+#                   testall
 #
 #test_SOURCES = $(srcdir)/test.F90
 #test_FCFLAGS = $(AM_FCFLAGS)
@@ -463,18 +463,18 @@ dist_noinst_SCRIPTS += put.sh \
 #testall_LDFLAGS = $(AM_LDFLAGS)
 #
 #dist_noinst_SCRIPTS += test.sh \
-#		       testany.sh \
-#		       testsome.sh \
-#		       testall.sh
+#                       testany.sh \
+#                       testsome.sh \
+#                       testall.sh
 #
 ###############
 ## Wait tests #
 ###############
 #
 #check_PROGRAMS += wait \
-#		   waitany \
-#		   waitsome \
-#		   waitall
+#                   waitany \
+#                   waitsome \
+#                   waitall
 #
 #wait_SOURCES = $(srcdir)/wait.F90
 #wait_FCFLAGS = $(AM_FCFLAGS)
@@ -493,9 +493,9 @@ dist_noinst_SCRIPTS += put.sh \
 #waitall_LDFLAGS = $(AM_LDFLAGS)
 #
 #dist_noinst_SCRIPTS += wait.sh \
-#		       waitany.sh \
-#		       waitsome.sh \
-#		       waitall.sh
+#                       waitany.sh \
+#                       waitsome.sh \
+#                       waitall.sh
 
 TEST_EXTENSIONS = .sh
 SH_LOG_COMPILER = $(SHELL)

@@ -39,24 +39,24 @@ test_vftrace_LDFLAGS = $(AM_LDFLAGS)
 
 
 dist_check_SCRIPTS = this_passes.sh \
-		     this_fails.sh \
-		     vftr_symbols_test_1.sh \
-		     vftr_environment_test_1.sh \
-		     vftr_environment_test_2.sh \
-		     vftr_setup_test_1.sh \
-		     vftr_setup_test_2.sh \
-		     vftr_filewrite_test_1.sh \
-		     vftr_filewrite_test_2.sh \
-		     vftr_scenario_test_1.sh \
-		     vftr_scenario_test_2.sh \
-		     vftr_scenario_test_3.sh \
-	 	     vftr_functions_test_1.sh \
-	 	     vftr_functions_test_2.sh \
-	 	     vftr_functions_test_3.sh \
-	 	     vftr_functions_test_4.sh \
-	 	     vftr_functions_test_5.sh \
-		     vftr_stacks_test_1.sh \
-		     vftr_browse_test_1.sh
+                     this_fails.sh \
+                     vftr_symbols_test_1.sh \
+                     vftr_environment_test_1.sh \
+                     vftr_environment_test_2.sh \
+                     vftr_setup_test_1.sh \
+                     vftr_setup_test_2.sh \
+                     vftr_filewrite_test_1.sh \
+                     vftr_filewrite_test_2.sh \
+                     vftr_scenario_test_1.sh \
+                     vftr_scenario_test_2.sh \
+                     vftr_scenario_test_3.sh \
+                     vftr_functions_test_1.sh \
+                     vftr_functions_test_2.sh \
+                     vftr_functions_test_3.sh \
+                     vftr_functions_test_4.sh \
+                     vftr_functions_test_5.sh \
+                     vftr_stacks_test_1.sh \
+                     vftr_browse_test_1.sh
 
 if WITH_MPI
 dist_check_SCRIPTS += vftr_stacks_test_2.sh
@@ -69,12 +69,12 @@ endif
 endif
 
 check_PROGRAMS += radixsort_uint64 \
-		  sort_integer_ascending \
-		  sort_integer_descending \
-		  sort_double_ascending \
-		  sort_double_descending \
-		  sort_double_copy_ascending \
-		  sort_double_copy_descending
+                  sort_integer_ascending \
+                  sort_integer_descending \
+                  sort_double_ascending \
+                  sort_double_descending \
+                  sort_double_copy_ascending \
+                  sort_double_copy_descending
 
 radixsort_uint64_SOURCES = $(srcdir)/radixsort_uint64.c
 radixsort_uint64_CFLAGS = $(AM_CFLAGS) -I$(top_builddir)/src
@@ -105,16 +105,16 @@ sort_double_copy_descending_CFLAGS = $(AM_CFLAGS) -I$(top_builddir)/src
 sort_double_copy_descending_LDFLAGS = $(AM_LDFLAGS)
 
 dist_check_SCRIPTS += radixsort_uint64.sh \
-		      sort_integer_ascending.sh \
-		      sort_integer_descending.sh \
-		      sort_double_ascending.sh \
-		      sort_double_descending.sh \
-		      sort_double_copy_ascending.sh \
-		      sort_double_copy_descending.sh
+                      sort_integer_ascending.sh \
+                      sort_integer_descending.sh \
+                      sort_double_ascending.sh \
+                      sort_double_descending.sh \
+                      sort_double_copy_ascending.sh \
+                      sort_double_copy_descending.sh
 
 TEST_EXTENSIONS = .sh
 SH_LOG_COMPILER = $(SHELL)
 
 TESTS = $(dist_check_SCRIPTS)
 XFAIL_TESTS = this_fails.sh \
-	      vftr_scenario_test_3.sh
+              vftr_scenario_test_3.sh

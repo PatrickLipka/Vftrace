@@ -40,10 +40,10 @@ endif
 # regions #
 ###########
 check_PROGRAMS = cregions1 \
-		 cregions2 \
-		 cregions3 \
-		 cregions4
-		
+                 cregions2 \
+                 cregions3 \
+                 cregions4
+
 cregions1_SOURCES = $(srcdir)/cregions1.c
 cregions1_CFLAGS  = $(AM_CFLAGS)
 cregions1_LDFLAGS = $(AM_LDFLAGS)
@@ -61,14 +61,14 @@ cregions4_CFLAGS  = $(AM_CFLAGS)
 cregions4_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS = cregions1.sh \
-		      cregions2.sh \
-		      cregions3.sh \
-		      cregions4.sh
+                      cregions2.sh \
+                      cregions3.sh \
+                      cregions4.sh
 if ENABLE_FORTRAN
 check_PROGRAMS += fregions1 \
-		  fregions2 \
-		  fregions3 \
-		  fregions4
+                  fregions2 \
+                  fregions3 \
+                  fregions4
 
 fregions1_SOURCES = $(srcdir)/fregions1.F90
 fregions1_FCFLAGS = $(AM_FCFLAGS)
@@ -87,9 +87,9 @@ fregions4_FCFLAGS = $(AM_FCFLAGS)
 fregions4_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += fregions1.sh \
-		       fregions2.sh \
-		       fregions3.sh \
-		       fregions4.sh
+                       fregions2.sh \
+                       fregions3.sh \
+                       fregions4.sh
 endif
 
 #############
