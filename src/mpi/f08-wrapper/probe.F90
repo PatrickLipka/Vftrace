@@ -20,7 +20,7 @@ SUBROUTINE MPI_Probe_f08(source, tag, comm, status, error)
    USE vftr_mpi_probe_f082c_f08interface, &
       ONLY : vftr_MPI_Probe_f082c
    USE mpi_f08, ONLY : MPI_Comm, &
-                        MPI_Status
+                       MPI_Status
    IMPLICIT NONE
    INTEGER, INTENT(IN) :: source
    INTEGER, INTENT(IN) :: tag
