@@ -38,10 +38,13 @@ SUBROUTINE MPI_Sendrecv_f08(sendbuf, sendcount, sendtype, dest, sendtag, &
    TYPE(MPI_Comm), INTENT(IN) :: comm
    TYPE(MPI_Status), INTENT(OUT) :: status
    INTEGER, OPTIONAL, INTENT(OUT) :: error
+   INTEGER :: tmperror
 
    CALL vftr_MPI_Sendrecv_f082c(sendbuf, sendcount, sendtype%MPI_VAL, dest, sendtag, &
                                 recvbuf, recvcount, recvtype%MPI_VAL, source, recvtag, &
-                                comm%MPI_VAL, status, error)
+                                comm%MPI_VAL, status, tmperror)
+
+   IF (PRESENT(error)) error = tmperror
 
 END SUBROUTINE MPI_Sendrecv_f08
 
