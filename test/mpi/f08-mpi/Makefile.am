@@ -77,7 +77,8 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 ########################
 # point to point tests #
 ########################
-check_PROGRAMS += send_recv
+check_PROGRAMS += send_recv \
+                  bsend_recv 
 #                  sendrecv \
 #                  sendrecv_replace \
 #                  isend_recv \
@@ -87,6 +88,38 @@ send_recv_SOURCES = $(srcdir)/send_recv.F90
 send_recv_FCFLAGS  = $(AM_FCFLAGS)
 send_recv_LDFLAGS = $(AM_LDFLAGS)
 
+#isend_recv_SOURCES = $(srcdir)/isend_recv.F90
+#isend_recv_FCFLAGS = $(AM_FCFLAGS)
+#isend_recv_LDFLAGS = $(AM_LDFLAGS)
+
+bsend_recv_SOURCES = $(srcdir)/bsend_recv.F90
+bsend_recv_FCFLAGS = $(AM_FCFLAGS)
+bsend_recv_LDFLAGS = $(AM_LDFLAGS)
+
+#ibsend_recv_SOURCES = $(srcdir)/ibsend_recv.F90
+#ibsend_recv_FCFLAGS = $(AM_FCFLAGS)
+#ibsend_recv_LDFLAGS = $(AM_LDFLAGS)
+#
+#ssend_recv_SOURCES = $(srcdir)/ssend_recv.F90
+#ssend_recv_FCFLAGS = $(AM_FCFLAGS)
+#ssend_recv_LDFLAGS = $(AM_LDFLAGS)
+#
+#issend_recv_SOURCES = $(srcdir)/issend_recv.F90
+#issend_recv_FCFLAGS = $(AM_FCFLAGS)
+#issend_recv_LDFLAGS = $(AM_LDFLAGS)
+#
+#rsend_recv_SOURCES = $(srcdir)/rsend_recv.F90
+#rsend_recv_FCFLAGS = $(AM_FCFLAGS)
+#rsend_recv_LDFLAGS = $(AM_LDFLAGS)
+#
+#irsend_recv_SOURCES = $(srcdir)/irsend_recv.F90
+#irsend_recv_FCFLAGS = $(AM_FCFLAGS)
+#irsend_recv_LDFLAGS = $(AM_LDFLAGS)
+#
+#send_irecv_SOURCES = $(srcdir)/send_irecv.F90
+#send_irecv_FCFLAGS = $(AM_FCFLAGS)
+#send_irecv_LDFLAGS = $(AM_LDFLAGS)
+#
 #sendrecv_SOURCES = $(srcdir)/sendrecv.F90
 #sendrecv_FCFLAGS  = $(AM_FCFLAGS)
 #sendrecv_LDFLAGS = $(AM_LDFLAGS)
@@ -95,15 +128,16 @@ send_recv_LDFLAGS = $(AM_LDFLAGS)
 #sendrecv_replace_FCFLAGS  = $(AM_FCFLAGS)
 #sendrecv_replace_LDFLAGS = $(AM_LDFLAGS)
 #
-#isend_recv_SOURCES = $(srcdir)/isend_recv.F90
-#isend_recv_FCFLAGS  = $(AM_FCFLAGS)
-#isend_recv_LDFLAGS = $(AM_LDFLAGS)
+#probe_SOURCES = $(srcdir)/probe.F90
+#probe_FCFLAGS = $(AM_FCFLAGS)
+#probe_LDFLAGS = $(AM_LDFLAGS)
 #
-#send_irecv_SOURCES = $(srcdir)/send_irecv.F90
-#send_irecv_FCFLAGS  = $(AM_FCFLAGS)
-#send_irecv_LDFLAGS = $(AM_LDFLAGS)
+#iprobe_SOURCES = $(srcdir)/iprobe.F90
+#iprobe_FCFLAGS = $(AM_FCFLAGS)
+#iprobe_LDFLAGS = $(AM_LDFLAGS)
 
-dist_noinst_SCRIPTS += send_recv.sh
+dist_noinst_SCRIPTS += send_recv.sh \
+                       bsend_recv.sh 
 #                       sendrecv.sh \
 #                       sendrecv_replace.sh \
 #                       isend_recv.sh \
