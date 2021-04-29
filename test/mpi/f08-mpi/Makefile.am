@@ -83,7 +83,8 @@ check_PROGRAMS += send_recv \
                   ibsend_recv \
                   ssend_recv \
                   issend_recv \
-                  rsend_recv
+                  rsend_recv \
+                  irsend_recv 
 #                  sendrecv \
 #                  sendrecv_replace \
 #                  isend_recv \
@@ -117,10 +118,10 @@ rsend_recv_SOURCES = $(srcdir)/rsend_recv.F90
 rsend_recv_FCFLAGS = $(AM_FCFLAGS)
 rsend_recv_LDFLAGS = $(AM_LDFLAGS)
 
-#irsend_recv_SOURCES = $(srcdir)/irsend_recv.F90
-#irsend_recv_FCFLAGS = $(AM_FCFLAGS)
-#irsend_recv_LDFLAGS = $(AM_LDFLAGS)
-#
+irsend_recv_SOURCES = $(srcdir)/irsend_recv.F90
+irsend_recv_FCFLAGS = $(AM_FCFLAGS)
+irsend_recv_LDFLAGS = $(AM_LDFLAGS)
+
 #send_irecv_SOURCES = $(srcdir)/send_irecv.F90
 #send_irecv_FCFLAGS = $(AM_FCFLAGS)
 #send_irecv_LDFLAGS = $(AM_LDFLAGS)
@@ -147,7 +148,8 @@ dist_noinst_SCRIPTS += send_recv.sh \
                        ibsend_recv.sh \
                        ssend_recv.sh \
                        issend_recv.sh \
-                       rsend_recv.sh
+                       rsend_recv.sh \
+		       irsend_recv.sh
 #                       sendrecv.sh \
 #                       sendrecv_replace.sh \
 #                       isend_recv.sh \
