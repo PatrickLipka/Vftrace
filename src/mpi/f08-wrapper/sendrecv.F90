@@ -36,7 +36,7 @@ SUBROUTINE MPI_Sendrecv_f08(sendbuf, sendcount, sendtype, dest, sendtag, &
    INTEGER, INTENT(IN) :: source
    INTEGER, INTENT(IN) :: recvtag
    TYPE(MPI_Comm), INTENT(IN) :: comm
-   TYPE(MPI_Status), INTENT(OUT) :: status
+   TYPE(MPI_Status) :: status
    INTEGER, OPTIONAL, INTENT(OUT) :: error
    INTEGER :: tmperror
 
