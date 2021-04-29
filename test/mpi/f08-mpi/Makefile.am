@@ -74,19 +74,19 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
                       derived_f08types.sh \
                       pcontrol.sh
 
-#########################
-## point to point tests #
-#########################
-#check_PROGRAMS += send_recv \
+########################
+# point to point tests #
+########################
+check_PROGRAMS += send_recv
 #                  sendrecv \
 #                  sendrecv_replace \
 #                  isend_recv \
 #                  send_irecv
-#
-#send_recv_SOURCES = $(srcdir)/send_recv.F90
-#send_recv_FCFLAGS  = $(AM_FCFLAGS)
-#send_recv_LDFLAGS = $(AM_LDFLAGS)
-#
+
+send_recv_SOURCES = $(srcdir)/send_recv.F90
+send_recv_FCFLAGS  = $(AM_FCFLAGS)
+send_recv_LDFLAGS = $(AM_LDFLAGS)
+
 #sendrecv_SOURCES = $(srcdir)/sendrecv.F90
 #sendrecv_FCFLAGS  = $(AM_FCFLAGS)
 #sendrecv_LDFLAGS = $(AM_LDFLAGS)
@@ -102,8 +102,8 @@ dist_noinst_SCRIPTS = init_finalize-1.sh \
 #send_irecv_SOURCES = $(srcdir)/send_irecv.F90
 #send_irecv_FCFLAGS  = $(AM_FCFLAGS)
 #send_irecv_LDFLAGS = $(AM_LDFLAGS)
-#
-#dist_noinst_SCRIPTS += send_recv.sh \
+
+dist_noinst_SCRIPTS += send_recv.sh
 #                       sendrecv.sh \
 #                       sendrecv_replace.sh \
 #                       isend_recv.sh \
