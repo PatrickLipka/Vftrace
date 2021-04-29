@@ -17,6 +17,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_send_f082c.c \
                                 vftr_mpi_rsend_f082c.c  \
                                 vftr_mpi_irsend_f082c.c  \
                                 vftr_mpi_recv_f082c.c \
+                                vftr_mpi_irecv_f082c.c \
                                 vftr_mpi_sendrecv_f082c.c
 libvftr_mpi_f082c_la_SOURCES += vftr_mpi_send_f082c_f08interface.F90 \
                                 vftr_mpi_isend_f082c_f08interface.F90 \
@@ -27,6 +28,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_send_f082c_f08interface.F90 \
                                 vftr_mpi_rsend_f082c_f08interface.F90 \
                                 vftr_mpi_irsend_f082c_f08interface.F90 \
                                 vftr_mpi_recv_f082c_f08interface.F90 \
+                                vftr_mpi_irecv_f082c_f08interface.F90 \
                                 vftr_mpi_sendrecv_f082c_f08interface.F90
 
 ###################
