@@ -20,8 +20,8 @@ AM_COND_IF([ENABLE_FORTRAN08],
                             test/mpi/f08-mpi/init_finalize-2.sh:test/mpi/testscripts/init_finalize-2.sh
                             test/mpi/f08-mpi/init_finalize-3.sh:test/mpi/testscripts/init_finalize-3.sh
                             test/mpi/f08-mpi/init_finalize-4.sh:test/mpi/testscripts/init_finalize-4.sh
-                            test/mpi/f08-mpi/ftypes.sh:test/mpi/testscripts/ftypes.sh
-                            test/mpi/f08-mpi/derived_ftypes.sh:test/mpi/testscripts/derived_ftypes.sh
+                            test/mpi/f08-mpi/f08types.sh:test/mpi/testscripts/f08types.sh
+                            test/mpi/f08-mpi/derived_f08types.sh:test/mpi/testscripts/derived_f08types.sh
                             test/mpi/f08-mpi/pcontrol.sh:test/mpi/testscripts/pcontrol.sh
                             test/mpi/f08-mpi/send_recv.sh:test/mpi/testscripts/send_recv.sh
                             test/mpi/f08-mpi/isend_recv.sh:test/mpi/testscripts/isend_recv.sh

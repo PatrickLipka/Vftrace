@@ -33,9 +33,9 @@ endif
 check_PROGRAMS = init_finalize_1 \
 		 init_finalize_2 \
 		 init_finalize_3 \
-		 init_finalize_4
-#		  ftypes \
-#		  derived_ftypes
+		 init_finalize_4 \
+                 f08types \
+                 derived_f08types
 		
 init_finalize_1_SOURCES = $(srcdir)/init_finalize.F90
 init_finalize_1_FCFLAGS = $(AM_FCFLAGS)
@@ -53,24 +53,21 @@ init_finalize_4_SOURCES = $(srcdir)/init_finalize.F90
 init_finalize_4_FCFLAGS = $(AM_FCFLAGS)
 init_finalize_4_LDFLAGS = $(AM_LDFLAGS)
 
-#ftypes_SOURCES = $(srcdir)/ftypes.F90
-#ftypes_FCFLAGS = $(AM_FCFLAGS)
-#ftypes_LDFLAGS = $(AM_LDFLAGS)
-#
-#derived_ftypes_SOURCES = $(srcdir)/derived_ftypes.F90
-#derived_ftypes_FCFLAGS = $(AM_FCFLAGS)
-#derived_ftypes_LDFLAGS = $(AM_LDFLAGS)
+f08types_SOURCES = $(srcdir)/f08types.F90
+f08types_FCFLAGS = $(AM_FCFLAGS)
+f08types_LDFLAGS = $(AM_LDFLAGS)
+
+derived_f08types_SOURCES = $(srcdir)/derived_f08types.F90
+derived_f08types_FCFLAGS = $(AM_FCFLAGS)
+derived_f08types_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS = init_finalize-1.sh \
                       init_finalize-2.sh \
                       init_finalize-3.sh \
-                      init_finalize-4.sh 
+                      init_finalize-4.sh \
+                      f08types.sh \
+                      derived_f08types.sh
 
-if SUPPORTS_MPIF08_TS
-else
-#dist_noinst_SCRIPTS = ftypes.sh \
-#		      derived_ftypes.sh
-#
 #########################
 ## point to point tests #
 #########################
@@ -493,7 +490,6 @@ dist_noinst_SCRIPTS += put.sh \
 #		       waitany.sh \
 #		       waitsome.sh \
 #		       waitall.sh
-endif
 
 TEST_EXTENSIONS = .sh
 SH_LOG_COMPILER = $(SHELL)
