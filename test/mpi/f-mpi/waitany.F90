@@ -40,7 +40,7 @@ PROGRAM waitany
 
    ! require cmd-line argument
    IF (COMMAND_ARGUMENT_COUNT() < 1) THEN
-      WRITE(UNIT=OUTPUT_UNIT, FMT="(A)") "./testany <msgsize in intergers>"
+      WRITE(UNIT=OUTPUT_UNIT, FMT="(A)") "./waitany <msgsize in intergers>"
       STOP 1
    END IF
 
