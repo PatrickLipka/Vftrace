@@ -66,15 +66,15 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_start_f082c_f08interface.F90 \
 #                                vftr_mpi_testany_f082c_f08interface.F90 \
 #                                vftr_mpi_testsome_f082c_f08interface.F90 \
 #                                vftr_mpi_testall_f082c_f08interface.F90
-#
-#########
-## wait #
-#########
-#libvftr_mpi_f082c_la_SOURCES += vftr_mpi_wait_f082c.c \
+
+########
+# wait #
+########
+libvftr_mpi_f082c_la_SOURCES += vftr_mpi_wait_f082c.c 
 #                                vftr_mpi_waitany_f082c.c \
 #                                vftr_mpi_waitsome_f082c.c \
 #                                vftr_mpi_waitall_f082c.c
-#libvftr_mpi_f082c_la_SOURCES += vftr_mpi_wait_f082c_f08interface.F90 \
+libvftr_mpi_f082c_la_SOURCES += vftr_mpi_wait_f082c_f08interface.F90 
 #                                vftr_mpi_waitany_f082c_f08interface.F90 \
 #                                vftr_mpi_waitsome_f082c_f08interface.F90 \
 #                                vftr_mpi_waitall_f082c_f08interface.F90
