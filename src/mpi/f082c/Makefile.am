@@ -41,15 +41,15 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_send_f082c_f08interface.F90 \
 # persistent p2p #
 ##################
 libvftr_mpi_f082c_la_SOURCES += vftr_mpi_start_f082c.c \
-                                vftr_mpi_startall_f082c.c 
-#                                vftr_mpi_send_init_f082c.c \
+                                vftr_mpi_startall_f082c.c \
+                                vftr_mpi_send_init_f082c.c 
 #                                vftr_mpi_bsend_init_f082c.c \
 #                                vftr_mpi_ssend_init_f082c.c \
 #                                vftr_mpi_rsend_init_f082c.c \
 #                                vftr_mpi_recv_init_f082c.c
 libvftr_mpi_f082c_la_SOURCES += vftr_mpi_start_f082c_f08interface.F90 \
-                                vftr_mpi_startall_f082c_f08interface.F90 
-#                                vftr_mpi_send_init_f082c_f08interface.F90 \
+                                vftr_mpi_startall_f082c_f08interface.F90 \
+                                vftr_mpi_send_init_f082c_f08interface.F90 
 #                                vftr_mpi_bsend_init_f082c_f08interface.F90 \
 #                                vftr_mpi_ssend_init_f082c_f08interface.F90 \
 #                                vftr_mpi_rsend_init_f082c_f08interface.F90 \
