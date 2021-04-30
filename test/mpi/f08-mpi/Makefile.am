@@ -161,8 +161,8 @@ dist_noinst_SCRIPTS += send_recv.sh \
 # Persistent P2P tests #
 ########################
 
-check_PROGRAMS += start 
-#                  startall \
+check_PROGRAMS += start \
+                  startall 
 #                  send_init \
 #                  bsend_init \
 #                  ssend_init \
@@ -173,10 +173,10 @@ start_SOURCES = $(srcdir)/start.F90
 start_FCFLAGS = $(AM_FCFLAGS)
 start_LDFLAGS = $(AM_LDFLAGS)
 
-#startall_SOURCES = $(srcdir)/startall.F90
-#startall_FCFLAGS = $(AM_FCFLAGS)
-#startall_LDFLAGS = $(AM_LDFLAGS)
-#
+startall_SOURCES = $(srcdir)/startall.F90
+startall_FCFLAGS = $(AM_FCFLAGS)
+startall_LDFLAGS = $(AM_LDFLAGS)
+
 #send_init_SOURCES = $(srcdir)/send_init.F90
 #send_init_FCFLAGS = $(AM_FCFLAGS)
 #send_init_LDFLAGS = $(AM_LDFLAGS)
@@ -197,8 +197,8 @@ start_LDFLAGS = $(AM_LDFLAGS)
 #recv_init_FCFLAGS = $(AM_FCFLAGS)
 #recv_init_LDFLAGS = $(AM_LDFLAGS)
 #
-dist_noinst_SCRIPTS += start.sh 
-#                       startall.sh \
+dist_noinst_SCRIPTS += start.sh \
+                       startall.sh 
 #                       send_init.sh \
 #                       bsend_init.sh \
 #                       ssend_init.sh \
