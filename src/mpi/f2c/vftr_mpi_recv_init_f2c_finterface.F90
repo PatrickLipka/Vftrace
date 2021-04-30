@@ -39,7 +39,6 @@ MODULE vftr_mpi_recv_init_f2c_finterface
          INTEGER SOURCE
          INTEGER TAG
          INTEGER F_COMM
-         INTEGER F_STATUS(MPI_STATUS_SIZE)
          INTEGER F_REQUEST
          INTEGER F_ERROR
       END SUBROUTINE vftr_MPI_Recv_init_f2c
