@@ -521,8 +521,8 @@ dist_noinst_SCRIPTS += put.sh \
 
 check_PROGRAMS += wait \
                    waitany \
-                   waitsome 
-#                   waitall
+                   waitsome \
+                   waitall
 
 wait_SOURCES = $(srcdir)/wait.F90
 wait_FCFLAGS = $(AM_FCFLAGS)
@@ -536,14 +536,14 @@ waitsome_SOURCES = $(srcdir)/waitsome.F90
 waitsome_FCFLAGS = $(AM_FCFLAGS)
 waitsome_LDFLAGS = $(AM_LDFLAGS)
 
-#waitall_SOURCES = $(srcdir)/waitall.F90
-#waitall_FCFLAGS = $(AM_FCFLAGS)
-#waitall_LDFLAGS = $(AM_LDFLAGS)
+waitall_SOURCES = $(srcdir)/waitall.F90
+waitall_FCFLAGS = $(AM_FCFLAGS)
+waitall_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += wait.sh \
                        waitany.sh \
-                       waitsome.sh 
-#                       waitall.sh
+                       waitsome.sh \
+                       waitall.sh
 
 TEST_EXTENSIONS = .sh
 SH_LOG_COMPILER = $(SHELL)
