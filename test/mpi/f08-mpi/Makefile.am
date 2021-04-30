@@ -162,8 +162,8 @@ dist_noinst_SCRIPTS += send_recv.sh \
 ########################
 
 check_PROGRAMS += start \
-                  startall 
-#                  send_init \
+                  startall \
+                  send_init 
 #                  bsend_init \
 #                  ssend_init \
 #                  rsend_init \
@@ -177,10 +177,10 @@ startall_SOURCES = $(srcdir)/startall.F90
 startall_FCFLAGS = $(AM_FCFLAGS)
 startall_LDFLAGS = $(AM_LDFLAGS)
 
-#send_init_SOURCES = $(srcdir)/send_init.F90
-#send_init_FCFLAGS = $(AM_FCFLAGS)
-#send_init_LDFLAGS = $(AM_LDFLAGS)
-#
+send_init_SOURCES = $(srcdir)/send_init.F90
+send_init_FCFLAGS = $(AM_FCFLAGS)
+send_init_LDFLAGS = $(AM_LDFLAGS)
+
 #bsend_init_SOURCES = $(srcdir)/bsend_init.F90
 #bsend_init_FCFLAGS = $(AM_FCFLAGS)
 #bsend_init_LDFLAGS = $(AM_LDFLAGS)
@@ -198,8 +198,8 @@ startall_LDFLAGS = $(AM_LDFLAGS)
 #recv_init_LDFLAGS = $(AM_LDFLAGS)
 #
 dist_noinst_SCRIPTS += start.sh \
-                       startall.sh 
-#                       send_init.sh \
+                       startall.sh \
+                       send_init.sh 
 #                       bsend_init.sh \
 #                       ssend_init.sh \
 #                       rsend_init.sh \
