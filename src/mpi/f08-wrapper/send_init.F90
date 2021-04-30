@@ -30,7 +30,7 @@ SUBROUTINE MPI_Send_init_f08(buf, count, datatype, dest, tag, comm, request, err
    INTEGER, INTENT(IN) :: tag
    TYPE(MPI_Comm), INTENT(IN) :: comm
    TYPE(MPI_Request), INTENT(OUT) :: request
-   INTEGER, OPTIONAL, INTENT(IN) :: error
+   INTEGER, OPTIONAL, INTENT(OUT) :: error
    INTEGER :: tmperror
 
    CALL vftr_MPI_Send_init_f082c(buf, count, datatype%MPI_VAL, dest, tag, &
