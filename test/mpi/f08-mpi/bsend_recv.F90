@@ -16,7 +16,7 @@ PROGRAM bsend_recv
    INTEGER, DIMENSION(:), ALLOCATABLE :: sbuffer
    INTEGER, DIMENSION(:), ALLOCATABLE :: rbuffer
    INTEGER, DIMENSION(:), ALLOCATABLE :: buffer
-   TYPE(c_ptr) buffer_addr
+   TYPE(c_ptr) :: buffer_addr
 
    TYPE(MPI_Status) :: recvstatus
 
