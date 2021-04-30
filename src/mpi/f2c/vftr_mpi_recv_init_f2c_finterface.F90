@@ -31,7 +31,6 @@ MODULE vftr_mpi_recv_init_f2c_finterface
       SUBROUTINE vftr_MPI_Recv_init_f2c(BUF, COUNT, F_DATATYPE, SOURCE, TAG, &
                                         F_COMM, F_REQUEST, F_ERROR) &
          BIND(C, name="vftr_MPI_Recv_init_f2c")
-         USE mpi, ONLY : MPI_STATUS_SIZE
          IMPLICIT NONE
          INTEGER BUF
          INTEGER COUNT
