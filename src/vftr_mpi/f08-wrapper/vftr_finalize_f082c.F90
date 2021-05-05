@@ -34,6 +34,7 @@ MODULE vftr_finalize_f082c
       END SUBROUTINE vftr_finalize_F08
 
    END INTERFACE
+
 #endif
 
 CONTAINS

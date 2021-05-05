@@ -50,6 +50,8 @@ int vftr_mpisize;
 unsigned int vftr_function_samplecount;
 unsigned int vftr_message_samplecount;
 
+bool vftr_do_stack_normalization;
+
 char *vftr_start_date;
 char *vftr_end_date;
 
@@ -152,8 +154,12 @@ void vftr_initialize() {
     if (vftr_off()) {
 	return;
     }
+    atexit (vftr_finalize);
     vftr_get_mpi_info (&vftr_mpirank, &vftr_mpisize);
     vftr_assert_environment ();
+
+    vftr_do_stack_normalization = !vftr_environment.no_stack_normalization->value;
+    vftr_setup_signals();
 	
     lib_opened = 0;
     vftr_timelimit = LONG_MAX;
@@ -261,11 +267,6 @@ void vftr_initialize() {
         }
     }
 
-    /* Define signal handlers */
-    if (!vftr_environment.signals_off->value) {
-	vftr_define_signal_handlers ();
-    }
-
     fflush (stdout);
     vftr_initcycles = vftr_get_cycles();
     
@@ -283,7 +284,6 @@ void vftr_finalize() {
     if (vftr_off())  return;
     vftr_set_end_date();
 
-    // get the total runtime
     long long finalize_time = vftr_get_runtime_usec();
 
     vftr_timer_end = true;
@@ -297,27 +297,29 @@ void vftr_finalize() {
 	vftr_strip_all_module_names ();
     }
     
-    vftr_normalize_stacks();
-
-    display_function_t **display_functions;
-    int n_display_functions;
-    if (vftr_env_need_display_functions()) {
-       display_functions = vftr_create_display_functions (vftr_environment.mpi_show_sync_time->value,
-                                                          &n_display_functions, vftr_environment.all_mpi_summary->value); 
-    }
-
     FILE *f_html = NULL;
-    if (vftr_environment.create_html->value) {
-       vftr_browse_create_directory ();
-       f_html = vftr_browse_init_profile_table (display_functions, n_display_functions);
+    display_function_t **display_functions = NULL;
+    int n_display_functions = 0;
+    if (vftr_do_stack_normalization) {
+       vftr_normalize_stacks();
+
+       if (vftr_env_need_display_functions()) {
+          display_functions = vftr_create_display_functions (vftr_environment.mpi_show_sync_time->value,
+                                                             &n_display_functions, vftr_environment.all_mpi_summary->value); 
+       }
+
+       if (vftr_environment.create_html->value) {
+          vftr_browse_create_directory ();
+          f_html = vftr_browse_init_profile_table (display_functions, n_display_functions);
+       }
     }
 
     if (vftr_profile_wanted) {
-       vftr_create_global_stack_strings ();
+       if (vftr_do_stack_normalization) vftr_create_global_stack_strings ();
        vftr_print_profile (vftr_log, f_html, &ntop, vftr_get_runtime_usec(), n_display_functions, display_functions);
     }
 #ifdef _MPI
-    if (vftr_environment.print_stack_profile->value || vftr_environment.all_mpi_summary->value) {
+    if (vftr_do_stack_normalization && (vftr_environment.print_stack_profile->value || vftr_environment.all_mpi_summary->value)) {
        // Inside of vftr_print_function_statistics, we use an MPI_Allgather to compute MPI imbalances. Therefore,
        // we need to call this function for every rank, but give it the information of vftr_profile_wanted
        // to avoid unrequired output.
@@ -327,11 +329,11 @@ void vftr_finalize() {
  
     funcTable = vftr_func_table;
 
-    if (vftr_profile_wanted) {
+    if (vftr_profile_wanted && vftr_do_stack_normalization) {
         vftr_print_global_stacklist(vftr_log);
     }
 
-    vftr_finalize_vfd_file (finalize_time, vftr_signal_number);
+    if (vftr_env_do_sampling()) vftr_finalize_vfd_file (finalize_time);
     if (vftr_events_enabled && vftr_stop_hwc() < 0) {
 	fprintf(vftr_log, "error stopping H/W counters, ignored\n");
     }
@@ -353,6 +355,8 @@ void vftr_finalize() {
 
 // vftr_finalize has to be called in the wrapper of MPI_Finalize, both for C and Fortran.
 // This is the corresponding symbol for Fortran, with an added "_".
+// It always calls vftr_finalize with active stack normalization ("true" argument), since
+// this is the standard way to terminate.
 void vftr_finalize_() {
 	vftr_finalize();
 #ifdef _MPI
