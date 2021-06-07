@@ -50,4 +50,3 @@ SUBROUTINE MPI_Waitsome_f08(incount, array_orequests, outcount, &
 END SUBROUTINE MPI_Waitsome_f08
 
 #endif 
-
