@@ -30,7 +30,7 @@ SUBROUTINE MPI_Iprobe_f08(source, tag, comm, flag, status, error)
    INTEGER, OPTIONAL, INTENT(OUT) :: error
    INTEGER :: tmperror
 
-   CALL vftr_MPI_Iprobe_f082c(source, tag, comm%MPI_VAL, FLAG, status, tmperror)
+   CALL vftr_MPI_Iprobe_f082c(source, tag, comm%MPI_VAL, flag, status, tmperror)
 
    IF (PRESENT(error)) error = tmperror
 
