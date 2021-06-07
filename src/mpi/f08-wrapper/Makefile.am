@@ -37,7 +37,7 @@ libvftr_f08mpiwrap_la_SOURCES += start.F90 \
 #########
 # tests #
 #########
-libvftr_f08mpiwrap_la_SOURCES +=
+libvftr_f08mpiwrap_la_SOURCES += test.F90
 
 ########
 # wait #
@@ -46,6 +46,7 @@ libvftr_f08mpiwrap_la_SOURCES += wait.F90 \
 				 waitany.F90 \
 				 waitsome.F90 \
 				 waitall.F90
+
 ########################
 # request deallocation #
 ########################

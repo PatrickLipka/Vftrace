@@ -55,14 +55,14 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_start_f082c_f08interface.F90 \
                                 vftr_mpi_rsend_init_f082c_f08interface.F90 \
                                 vftr_mpi_recv_init_f082c_f08interface.F90
 
-##########
-## tests #
-##########
-#libvftr_mpi_f082c_la_SOURCES += vftr_mpi_test_f082c.c \
+#########
+# tests #
+#########
+libvftr_mpi_f082c_la_SOURCES += vftr_mpi_test_f082c.c
 #                                vftr_mpi_testany_f082c.c \
 #                                vftr_mpi_testsome_f082c.c \
 #                                vftr_mpi_testall_f082c.c
-#libvftr_mpi_f082c_la_SOURCES += vftr_mpi_test_f082c_f08interface.F90 \
+libvftr_mpi_f082c_la_SOURCES += vftr_mpi_test_f082c_f08interface.F90
 #                                vftr_mpi_testany_f082c_f08interface.F90 \
 #                                vftr_mpi_testsome_f082c_f08interface.F90 \
 #                                vftr_mpi_testall_f082c_f08interface.F90

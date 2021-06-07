@@ -534,18 +534,18 @@ dist_noinst_SCRIPTS += put.sh \
                        fetch_and_op.sh \
                        compare_and_swap.sh
 
-###############
-## Test tests #
-###############
-#check_PROGRAMS += test \
+##############
+# Test tests #
+##############
+check_PROGRAMS += test
 #                   testany \
 #                   testsome \
 #                   testall
-#
-#test_SOURCES = $(srcdir)/test.F90
-#test_FCFLAGS = $(AM_FCFLAGS)
-#test_LDFLAGS = $(AM_LDFLAGS)
-#
+
+test_SOURCES = $(srcdir)/test.F90
+test_FCFLAGS = $(AM_FCFLAGS)
+test_LDFLAGS = $(AM_LDFLAGS)
+
 #testany_SOURCES = $(srcdir)/testany.F90
 #testany_FCFLAGS = $(AM_FCFLAGS)
 #testany_LDFLAGS = $(AM_LDFLAGS)
@@ -557,8 +557,8 @@ dist_noinst_SCRIPTS += put.sh \
 #testall_SOURCES = $(srcdir)/testall.F90
 #testall_FCFLAGS = $(AM_FCFLAGS)
 #testall_LDFLAGS = $(AM_LDFLAGS)
-#
-#dist_noinst_SCRIPTS += test.sh \
+
+dist_noinst_SCRIPTS += test.sh
 #                       testany.sh \
 #                       testsome.sh \
 #                       testall.sh
