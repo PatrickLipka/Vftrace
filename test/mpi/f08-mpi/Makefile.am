@@ -538,8 +538,8 @@ dist_noinst_SCRIPTS += put.sh \
 # Test tests #
 ##############
 check_PROGRAMS += test \
-                   testany
-#                   testsome \
+                   testany \
+                   testsome
 #                   testall
 
 test_SOURCES = $(srcdir)/test.F90
@@ -550,17 +550,17 @@ testany_SOURCES = $(srcdir)/testany.F90
 testany_FCFLAGS = $(AM_FCFLAGS)
 testany_LDFLAGS = $(AM_LDFLAGS)
 
-#testsome_SOURCES = $(srcdir)/testsome.F90
-#testsome_FCFLAGS = $(AM_FCFLAGS)
-#testsome_LDFLAGS = $(AM_LDFLAGS)
-#
+testsome_SOURCES = $(srcdir)/testsome.F90
+testsome_FCFLAGS = $(AM_FCFLAGS)
+testsome_LDFLAGS = $(AM_LDFLAGS)
+
 #testall_SOURCES = $(srcdir)/testall.F90
 #testall_FCFLAGS = $(AM_FCFLAGS)
 #testall_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += test.sh \
-                       testany.sh
-#                       testsome.sh \
+                       testany.sh \
+                       testsome.sh
 #                       testall.sh
 
 ##############
