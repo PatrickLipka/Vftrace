@@ -39,7 +39,7 @@ MODULE vftr_mpi_waitsome_f082c_f08interface
          INTEGER, INTENT(OUT) :: f_outcount
          INTEGER, INTENT(OUT) :: f_array_of_indices(*)
          TYPE(MPI_Status) :: f_array_of_statuses(*)
-         INTEGER, INTENT(INOUT) :: f_error
+         INTEGER, INTENT(OUT) :: f_error
       END SUBROUTINE vftr_MPI_Waitsome_f082c
 
    END INTERFACE
