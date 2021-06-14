@@ -92,6 +92,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_barrier_f082c.c \
                                 vftr_mpi_bcast_f082c.c \
                                 vftr_mpi_ibcast_f082c.c \
                                 vftr_mpi_gather_f082c.c \
+                                vftr_mpi_igather_f082c.c \
                                 vftr_mpi_gatherv_f082c.c \
                                 vftr_mpi_scatter_f082c.c \
                                 vftr_mpi_scatterv_f082c.c \
@@ -104,6 +105,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_barrier_f082c_f08interface.F90 \
                                 vftr_mpi_bcast_f082c_f08interface.F90 \
                                 vftr_mpi_ibcast_f082c_f08interface.F90 \
                                 vftr_mpi_gather_f082c_f08interface.F90 \
+                                vftr_mpi_igather_f082c_f08interface.F90 \
                                 vftr_mpi_gatherv_f082c_f08interface.F90 \
                                 vftr_mpi_scatter_f082c_f08interface.F90 \
                                 vftr_mpi_scatterv_f082c_f08interface.F90 \
