@@ -240,7 +240,7 @@ check_PROGRAMS += barrier \
                   alltoallv_intercom \
                   alltoallw \
                   alltoallw_inplace \
-                  alltoallw_intercom \
+                  alltoallw_intercom
 
 barrier_SOURCES = $(srcdir)/barrier.F90
 barrier_FCFLAGS = $(AM_FCFLAGS)
