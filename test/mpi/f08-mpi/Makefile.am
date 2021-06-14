@@ -212,6 +212,8 @@ dist_noinst_SCRIPTS += start.sh \
 check_PROGRAMS += barrier \
                   bcast \
                   bcast_intercom \
+                  ibcast \
+                  ibcast_intercom \
                   gather \
                   gather_intercom \
                   gather_inplace \
@@ -251,6 +253,14 @@ bcast_LDFLAGS = $(AM_LDFLAGS)
 bcast_intercom_SOURCES = $(srcdir)/bcast_intercom.F90
 bcast_intercom_FCFLAGS = $(AM_FCFLAGS)
 bcast_intercom_LDFLAGS = $(AM_LDFLAGS)
+
+ibcast_SOURCES = $(srcdir)/ibcast.F90
+ibcast_FCFLAGS = $(AM_FCFLAGS)
+ibcast_LDFLAGS = $(AM_LDFLAGS)
+
+ibcast_intercom_SOURCES = $(srcdir)/ibcast_intercom.F90
+ibcast_intercom_FCFLAGS = $(AM_FCFLAGS)
+ibcast_intercom_LDFLAGS = $(AM_LDFLAGS)
 
 gather_SOURCES = $(srcdir)/gather.F90
 gather_FCFLAGS = $(AM_FCFLAGS)
@@ -363,6 +373,8 @@ alltoallw_inplace_LDFLAGS = $(AM_LDFLAGS)
 dist_noinst_SCRIPTS += barrier.sh \
                        bcast.sh \
                        bcast_intercom.sh \
+                       ibcast.sh \
+                       ibcast_intercom.sh \
                        gather.sh \
                        gather_intercom.sh \
                        gather_inplace.sh \
