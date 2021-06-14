@@ -215,32 +215,32 @@ check_PROGRAMS += barrier \
                   ibcast \
                   ibcast_intercom \
                   gather \
-                  gather_intercom \
                   gather_inplace \
+                  gather_intercom \
                   gatherv \
-                  gatherv_intercom \
                   gatherv_inplace \
+                  gatherv_intercom \
                   scatter \
-                  scatter_intercom \
                   scatter_inplace \
+                  scatter_intercom \
                   scatterv \
-                  scatterv_intercom \
                   scatterv_inplace \
+                  scatterv_intercom \
                   allgather \
-                  allgather_intercom \
                   allgather_inplace \
+                  allgather_intercom \
                   allgatherv \
-                  allgatherv_intercom \
                   allgatherv_inplace \
+                  allgatherv_intercom \
                   alltoall \
-                  alltoall_intercom \
                   alltoall_inplace \
+                  alltoall_intercom \
                   alltoallv \
-                  alltoallv_intercom \
                   alltoallv_inplace \
+                  alltoallv_intercom \
                   alltoallw \
+                  alltoallw_inplace \
                   alltoallw_intercom \
-                  alltoallw_inplace
 
 barrier_SOURCES = $(srcdir)/barrier.F90
 barrier_FCFLAGS = $(AM_FCFLAGS)
