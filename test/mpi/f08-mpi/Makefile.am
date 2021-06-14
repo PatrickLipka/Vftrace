@@ -223,6 +223,9 @@ check_PROGRAMS += barrier \
                   gatherv \
                   gatherv_inplace \
                   gatherv_intercom \
+                  igatherv \
+                  igatherv_inplace \
+                  igatherv_intercom \
                   scatter \
                   scatter_inplace \
                   scatter_intercom \
@@ -300,6 +303,18 @@ gatherv_inplace_LDFLAGS = $(AM_LDFLAGS)
 gatherv_intercom_SOURCES = $(srcdir)/gatherv_intercom.F90
 gatherv_intercom_FCFLAGS = $(AM_FCFLAGS)
 gatherv_intercom_LDFLAGS = $(AM_LDFLAGS)
+
+igatherv_SOURCES = $(srcdir)/igatherv.F90
+igatherv_FCFLAGS = $(AM_FCFLAGS)
+igatherv_LDFLAGS = $(AM_LDFLAGS)
+
+igatherv_inplace_SOURCES = $(srcdir)/igatherv_inplace.F90
+igatherv_inplace_FCFLAGS = $(AM_FCFLAGS)
+igatherv_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+igatherv_intercom_SOURCES = $(srcdir)/igatherv_intercom.F90
+igatherv_intercom_FCFLAGS = $(AM_FCFLAGS)
+igatherv_intercom_LDFLAGS = $(AM_LDFLAGS)
 
 scatter_SOURCES = $(srcdir)/scatter.F90
 scatter_FCFLAGS = $(AM_FCFLAGS)
@@ -399,6 +414,9 @@ dist_noinst_SCRIPTS += barrier.sh \
                        gatherv.sh \
                        gatherv_inplace.sh \
                        gatherv_intercom.sh \
+                       igatherv.sh \
+                       igatherv_inplace.sh \
+                       igatherv_intercom.sh \
                        scatter.sh \
                        scatter_inplace.sh \
                        scatter_intercom.sh \
