@@ -196,3 +196,5 @@ libvftr_mpi_f2c_la_CFLAGS += -D_MPI
 libvftr_mpi_f2c_la_FCFLAGS += -D_MPI
 libvftr_mpi_f2c_la_CFLAGS += -I${srcdir}/../../ \
                              -I${srcdir}/../vftr_mpi/
+
+CLEANFILES = *.mod

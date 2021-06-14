@@ -101,5 +101,4 @@ if WITH_MPI
 libvftr_f08mpiwrap_la_FCFLAGS += -D_MPI
 endif
 
-clean-local:
-	rm -f *.mod
+CLEANFILES = *.mod

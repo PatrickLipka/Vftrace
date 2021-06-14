@@ -90,6 +90,4 @@ if ENABLE_FORTRAN
 include_HEADERS += vftrace.mod
 endif
 
-clean-local:
-	rm -f *.mod
-
+CLEANFILES = *.mod
