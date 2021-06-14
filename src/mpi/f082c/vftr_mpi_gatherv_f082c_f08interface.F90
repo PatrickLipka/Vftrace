@@ -34,16 +34,16 @@ MODULE vftr_mpi_gatherv_f082c_f08interface
                                         f_error) &
          BIND(C, name="vftr_MPI_Gatherv_f082c")
          IMPLICIT NONE
-         INTEGER, INTENT(IN) :: SENDBUF
-         INTEGER, INTENT(IN) :: SENDCOUNT
-         INTEGER, INTENT(IN) :: F_SENDTYPE
-         INTEGER, INTENT(IN) :: RECVBUF
-         INTEGER, INTENT(IN) :: F_RECVCOUNTS(*)
-         INTEGER, INTENT(IN) :: F_DISPLS(*)
-         INTEGER, INTENT(IN) :: F_RECVTYPE
-         INTEGER, INTENT(IN) :: ROOT
-         INTEGER, INTENT(IN) :: F_COMM
-         INTEGER, INTENT(OUT) :: F_ERROR
+         INTEGER, INTENT(IN) :: sendbuf
+         INTEGER, INTENT(IN) :: sendcount
+         INTEGER, INTENT(IN) :: f_sendtype
+         INTEGER, INTENT(IN) :: recvbuf
+         INTEGER, INTENT(IN) :: f_recvcounts(*)
+         INTEGER, INTENT(IN) :: f_displs(*)
+         INTEGER, INTENT(IN) :: f_recvtype
+         INTEGER, INTENT(IN) :: root
+         INTEGER, INTENT(IN) :: f_comm
+         INTEGER, INTENT(OUT) :: f_error
       END SUBROUTINE vftr_MPI_Gatherv_f082c
 
    END INTERFACE
