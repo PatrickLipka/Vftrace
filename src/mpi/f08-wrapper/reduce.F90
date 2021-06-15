@@ -17,7 +17,7 @@
 #ifdef _MPI
 
 SUBROUTINE MPI_Reduce_f08(sendbuf, recvbuf, count, datatype, &
-                      op, root, comm, error)
+                          op, root, comm, error)
    USE vftr_mpi_reduce_f082c_f08interface, &
       ONLY : vftr_MPI_Reduce_f082c
    USE mpi_f08, ONLY : MPI_Datatype, &
