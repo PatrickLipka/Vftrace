@@ -578,6 +578,9 @@ check_PROGRAMS += reduce \
                   allreduce \
                   allreduce_inplace \
                   allreduce_intercom \
+                  iallreduce \
+                  iallreduce_inplace \
+                  iallreduce_intercom \
                   reduce_scatter_block \
                   reduce_scatter_block_inplace \
                   reduce_scatter_block_intercom \
@@ -624,6 +627,18 @@ allreduce_inplace_LDFLAGS = $(AM_LDFLAGS)
 allreduce_intercom_SOURCES = $(srcdir)/allreduce_intercom.F90
 allreduce_intercom_FCFLAGS = $(AM_FCFLAGS)
 allreduce_intercom_LDFLAGS = $(AM_LDFLAGS)
+
+iallreduce_SOURCES = $(srcdir)/iallreduce.F90
+iallreduce_FCFLAGS = $(AM_FCFLAGS)
+iallreduce_LDFLAGS = $(AM_LDFLAGS)
+
+iallreduce_inplace_SOURCES = $(srcdir)/iallreduce_inplace.F90
+iallreduce_inplace_FCFLAGS = $(AM_FCFLAGS)
+iallreduce_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+iallreduce_intercom_SOURCES = $(srcdir)/iallreduce_intercom.F90
+iallreduce_intercom_FCFLAGS = $(AM_FCFLAGS)
+iallreduce_intercom_LDFLAGS = $(AM_LDFLAGS)
 
 reduce_scatter_block_SOURCES = $(srcdir)/reduce_scatter_block.F90
 reduce_scatter_block_FCFLAGS = $(AM_FCFLAGS)
@@ -674,6 +689,9 @@ dist_noinst_SCRIPTS += reduce.sh \
                        allreduce.sh \
                        allreduce_inplace.sh \
                        allreduce_intercom.sh \
+                       iallreduce.sh \
+                       iallreduce_inplace.sh \
+                       iallreduce_intercom.sh \
                        reduce_scatter_block.sh \
                        reduce_scatter_block_inplace.sh \
                        reduce_scatter_block_intercom.sh \
