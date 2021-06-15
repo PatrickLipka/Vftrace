@@ -241,6 +241,9 @@ check_PROGRAMS += barrier \
                   allgather \
                   allgather_inplace \
                   allgather_intercom \
+                  iallgather \
+                  iallgather_inplace \
+                  iallgather_intercom \
                   allgatherv \
                   allgatherv_inplace \
                   allgatherv_intercom \
@@ -382,6 +385,18 @@ allgather_intercom_SOURCES = $(srcdir)/allgather_intercom.F90
 allgather_intercom_FCFLAGS = $(AM_FCFLAGS)
 allgather_intercom_LDFLAGS = $(AM_LDFLAGS)
 
+iallgather_SOURCES = $(srcdir)/iallgather.F90
+iallgather_FCFLAGS = $(AM_FCFLAGS)
+iallgather_LDFLAGS = $(AM_LDFLAGS)
+
+iallgather_inplace_SOURCES = $(srcdir)/iallgather_inplace.F90
+iallgather_inplace_FCFLAGS = $(AM_FCFLAGS)
+iallgather_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+iallgather_intercom_SOURCES = $(srcdir)/iallgather_intercom.F90
+iallgather_intercom_FCFLAGS = $(AM_FCFLAGS)
+iallgather_intercom_LDFLAGS = $(AM_LDFLAGS)
+
 allgatherv_SOURCES = $(srcdir)/allgatherv.F90
 allgatherv_FCFLAGS = $(AM_FCFLAGS)
 allgatherv_LDFLAGS = $(AM_LDFLAGS)
@@ -462,6 +477,9 @@ dist_noinst_SCRIPTS += barrier.sh \
                        allgather.sh \
                        allgather_inplace.sh \
                        allgather_intercom.sh \
+                       iallgather.sh \
+                       iallgather_inplace.sh \
+                       iallgather_intercom.sh \
                        allgatherv.sh \
                        allgatherv_inplace.sh \
                        allgatherv_intercom.sh \

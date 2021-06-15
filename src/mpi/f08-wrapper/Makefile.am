@@ -70,6 +70,7 @@ libvftr_f08mpiwrap_la_SOURCES += barrier.F90 \
                                  scatterv.F90 \
                                  iscatterv.F90 \
                                  allgather.F90 \
+                                 iallgather.F90 \
                                  allgatherv.F90 \
                                  alltoall.F90 \
                                  alltoallv.F90 \
