@@ -18,6 +18,7 @@ AC_CONFIG_LINKS(test/units/ref_input/scenario_1.json:test/units/ref_input/scenar
                 test/units/ref_input/scenario_2.json:test/units/ref_input/scenario_2.json
                 test/units/ref_input/scenario_3.json:test/units/ref_input/scenario_3.json
                 test/units/ref_input/symbols_1.x:test/units/ref_input/symbols_1.x
+                test/units/ref_input/symbols_2.x:test/units/ref_input/symbols_2.x
                )
 AC_CONFIG_LINKS(test/units/ref_output/environment_1.out:test/units/ref_output/environment_1.out
                 test/units/ref_output/environment_2.out:test/units/ref_output/environment_2.out
@@ -27,6 +28,7 @@ AC_CONFIG_LINKS(test/units/ref_output/environment_1.out:test/units/ref_output/en
                 test/units/ref_output/setup_1.out:test/units/ref_output/setup_1.out
                 test/units/ref_output/setup_2.out:test/units/ref_output/setup_2.out
                 test/units/ref_output/symbols_1.out:test/units/ref_output/symbols_1.out
+                test/units/ref_output/symbols_2.out:test/units/ref_output/symbols_2.out
                 test/units/ref_output/sxhwc_1.out:test/units/ref_output/sxhwc_1.out
                )
 
@@ -48,6 +50,7 @@ AM_COND_IF([WITH_MPI],
           )
 
 AC_CONFIG_LINKS(test/units/symbols_1.sh:test/units/symbols_1.sh
+                test/units/symbols_2.sh:test/units/symbols_2.sh
                 test/units/environment_1.sh:test/units/environment_1.sh
                 test/units/environment_2.sh:test/units/environment_2.sh
                 test/units/setup_1.sh:test/units/setup_1.sh
