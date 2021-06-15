@@ -264,7 +264,10 @@ check_PROGRAMS += barrier \
                   ialltoallv_intercom \
                   alltoallw \
                   alltoallw_inplace \
-                  alltoallw_intercom
+                  alltoallw_intercom \
+                  ialltoallw \
+                  ialltoallw_inplace \
+                  ialltoallw_intercom
 
 barrier_SOURCES = $(srcdir)/barrier.F90
 barrier_FCFLAGS = $(AM_FCFLAGS)
@@ -490,6 +493,18 @@ alltoallw_intercom_SOURCES = $(srcdir)/alltoallw_intercom.F90
 alltoallw_intercom_FCFLAGS = $(AM_FCFLAGS)
 alltoallw_intercom_LDFLAGS = $(AM_LDFLAGS)
 
+ialltoallw_SOURCES = $(srcdir)/ialltoallw.F90
+ialltoallw_FCFLAGS = $(AM_FCFLAGS)
+ialltoallw_LDFLAGS = $(AM_LDFLAGS)
+
+ialltoallw_inplace_SOURCES = $(srcdir)/ialltoallw_inplace.F90
+ialltoallw_inplace_FCFLAGS = $(AM_FCFLAGS)
+ialltoallw_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+ialltoallw_intercom_SOURCES = $(srcdir)/ialltoallw_intercom.F90
+ialltoallw_intercom_FCFLAGS = $(AM_FCFLAGS)
+ialltoallw_intercom_LDFLAGS = $(AM_LDFLAGS)
+
 dist_noinst_SCRIPTS += barrier.sh \
                        bcast.sh \
                        bcast_intercom.sh \
@@ -545,7 +560,10 @@ dist_noinst_SCRIPTS += barrier.sh \
                        ialltoallv_intercom.sh \
                        alltoallw.sh \
                        alltoallw_inplace.sh \
-                       alltoallw_intercom.sh
+                       alltoallw_intercom.sh \
+                       ialltoallw.sh \
+                       ialltoallw_inplace.sh \
+                       ialltoallw_intercom.sh
 
 #####################
 # Global reductions #
