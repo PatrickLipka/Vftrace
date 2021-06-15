@@ -235,6 +235,9 @@ check_PROGRAMS += barrier \
                   scatterv \
                   scatterv_inplace \
                   scatterv_intercom \
+                  iscatterv \
+                  iscatterv_inplace \
+                  iscatterv_intercom \
                   allgather \
                   allgather_inplace \
                   allgather_intercom \
@@ -355,6 +358,18 @@ scatterv_intercom_SOURCES = $(srcdir)/scatterv_intercom.F90
 scatterv_intercom_FCFLAGS = $(AM_FCFLAGS)
 scatterv_intercom_LDFLAGS = $(AM_LDFLAGS)
 
+iscatterv_SOURCES = $(srcdir)/iscatterv.F90
+iscatterv_FCFLAGS = $(AM_FCFLAGS)
+iscatterv_LDFLAGS = $(AM_LDFLAGS)
+
+iscatterv_inplace_SOURCES = $(srcdir)/iscatterv_inplace.F90
+iscatterv_inplace_FCFLAGS = $(AM_FCFLAGS)
+iscatterv_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+iscatterv_intercom_SOURCES = $(srcdir)/iscatterv_intercom.F90
+iscatterv_intercom_FCFLAGS = $(AM_FCFLAGS)
+iscatterv_intercom_LDFLAGS = $(AM_LDFLAGS)
+
 allgather_SOURCES = $(srcdir)/allgather.F90
 allgather_FCFLAGS = $(AM_FCFLAGS)
 allgather_LDFLAGS = $(AM_LDFLAGS)
@@ -441,6 +456,9 @@ dist_noinst_SCRIPTS += barrier.sh \
                        scatterv.sh \
                        scatterv_inplace.sh \
                        scatterv_intercom.sh \
+                       iscatterv.sh \
+                       iscatterv_inplace.sh \
+                       iscatterv_intercom.sh \
                        allgather.sh \
                        allgather_inplace.sh \
                        allgather_intercom.sh \
