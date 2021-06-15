@@ -76,6 +76,7 @@ libvftr_f08mpiwrap_la_SOURCES += barrier.F90 \
                                  alltoall.F90 \
                                  ialltoall.F90 \
                                  alltoallv.F90 \
+                                 ialltoallv.F90 \
                                  alltoallw.F90
 
 ####################

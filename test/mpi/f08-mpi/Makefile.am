@@ -259,6 +259,9 @@ check_PROGRAMS += barrier \
                   alltoallv \
                   alltoallv_inplace \
                   alltoallv_intercom \
+                  ialltoallv \
+                  ialltoallv_inplace \
+                  ialltoallv_intercom \
                   alltoallw \
                   alltoallw_inplace \
                   alltoallw_intercom
@@ -463,6 +466,18 @@ alltoallv_intercom_SOURCES = $(srcdir)/alltoallv_intercom.F90
 alltoallv_intercom_FCFLAGS = $(AM_FCFLAGS)
 alltoallv_intercom_LDFLAGS = $(AM_LDFLAGS)
 
+ialltoallv_SOURCES = $(srcdir)/ialltoallv.F90
+ialltoallv_FCFLAGS = $(AM_FCFLAGS)
+ialltoallv_LDFLAGS = $(AM_LDFLAGS)
+
+ialltoallv_inplace_SOURCES = $(srcdir)/ialltoallv_inplace.F90
+ialltoallv_inplace_FCFLAGS = $(AM_FCFLAGS)
+ialltoallv_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+ialltoallv_intercom_SOURCES = $(srcdir)/ialltoallv_intercom.F90
+ialltoallv_intercom_FCFLAGS = $(AM_FCFLAGS)
+ialltoallv_intercom_LDFLAGS = $(AM_LDFLAGS)
+
 alltoallw_SOURCES = $(srcdir)/alltoallw.F90
 alltoallw_FCFLAGS = $(AM_FCFLAGS)
 alltoallw_LDFLAGS = $(AM_LDFLAGS)
@@ -525,6 +540,9 @@ dist_noinst_SCRIPTS += barrier.sh \
                        alltoallv.sh \
                        alltoallv_inplace.sh \
                        alltoallv_intercom.sh \
+                       ialltoallv.sh \
+                       ialltoallv_inplace.sh \
+                       ialltoallv_intercom.sh \
                        alltoallw.sh \
                        alltoallw_inplace.sh \
                        alltoallw_intercom.sh

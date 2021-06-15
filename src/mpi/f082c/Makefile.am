@@ -106,6 +106,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_barrier_f082c.c \
                                 vftr_mpi_alltoall_f082c.c \
                                 vftr_mpi_ialltoall_f082c.c \
                                 vftr_mpi_alltoallv_f082c.c \
+                                vftr_mpi_ialltoallv_f082c.c \
                                 vftr_mpi_alltoallw_f082c.c 
 libvftr_mpi_f082c_la_SOURCES += vftr_mpi_barrier_f082c_f08interface.F90 \
                                 vftr_mpi_bcast_f082c_f08interface.F90 \
@@ -125,6 +126,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_barrier_f082c_f08interface.F90 \
                                 vftr_mpi_alltoall_f082c_f08interface.F90 \
                                 vftr_mpi_ialltoall_f082c_f08interface.F90 \
                                 vftr_mpi_alltoallv_f082c_f08interface.F90 \
+                                vftr_mpi_ialltoallv_f082c_f08interface.F90 \
                                 vftr_mpi_alltoallw_f082c_f08interface.F90
 
 ####################
