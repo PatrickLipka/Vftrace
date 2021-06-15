@@ -572,6 +572,9 @@ dist_noinst_SCRIPTS += barrier.sh \
 check_PROGRAMS += reduce \
                   reduce_inplace \
                   reduce_intercom \
+                  ireduce \
+                  ireduce_inplace \
+                  ireduce_intercom \
                   allreduce \
                   allreduce_inplace \
                   allreduce_intercom \
@@ -597,6 +600,18 @@ reduce_inplace_LDFLAGS = $(AM_LDFLAGS)
 reduce_intercom_SOURCES = $(srcdir)/reduce_intercom.F90
 reduce_intercom_FCFLAGS = $(AM_FCFLAGS)
 reduce_intercom_LDFLAGS = $(AM_LDFLAGS)
+
+ireduce_SOURCES = $(srcdir)/ireduce.F90
+ireduce_FCFLAGS = $(AM_FCFLAGS)
+ireduce_LDFLAGS = $(AM_LDFLAGS)
+
+ireduce_inplace_SOURCES = $(srcdir)/ireduce_inplace.F90
+ireduce_inplace_FCFLAGS = $(AM_FCFLAGS)
+ireduce_inplace_LDFLAGS = $(AM_LDFLAGS)
+
+ireduce_intercom_SOURCES = $(srcdir)/ireduce_intercom.F90
+ireduce_intercom_FCFLAGS = $(AM_FCFLAGS)
+ireduce_intercom_LDFLAGS = $(AM_LDFLAGS)
 
 allreduce_SOURCES = $(srcdir)/allreduce.F90
 allreduce_FCFLAGS = $(AM_FCFLAGS)
@@ -653,6 +668,9 @@ exscan_inplace_LDFLAGS = $(AM_LDFLAGS)
 dist_noinst_SCRIPTS += reduce.sh \
                        reduce_inplace.sh \
                        reduce_intercom.sh \
+                       ireduce.sh \
+                       ireduce_inplace.sh \
+                       ireduce_intercom.sh \
                        allreduce.sh \
                        allreduce_inplace.sh \
                        allreduce_intercom.sh \
