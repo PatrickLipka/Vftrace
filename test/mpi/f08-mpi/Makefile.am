@@ -767,6 +767,7 @@ dist_noinst_SCRIPTS += reduce.sh \
 # One sided tests #
 ###################
 check_PROGRAMS += put \
+                  rput \
                   get \
                   accumulate \
                   get_accumulate \
@@ -776,6 +777,10 @@ check_PROGRAMS += put \
 put_SOURCES = $(srcdir)/put.F90
 put_FCFLAGS = $(AM_FCFLAGS)
 put_LDFLAGS = $(AM_LDFLAGS)
+
+rput_SOURCES = $(srcdir)/rput.F90
+rput_FCFLAGS = $(AM_FCFLAGS)
+rput_LDFLAGS = $(AM_LDFLAGS)
 
 get_SOURCES = $(srcdir)/get.F90
 get_FCFLAGS = $(AM_FCFLAGS)
@@ -798,6 +803,7 @@ compare_and_swap_FCFLAGS = $(AM_FCFLAGS)
 compare_and_swap_LDFLAGS = $(AM_LDFLAGS)
 
 dist_noinst_SCRIPTS += put.sh \
+                       rput.sh \
                        get.sh \
                        accumulate.sh \
                        get_accumulate.sh \
