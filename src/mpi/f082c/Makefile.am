@@ -143,6 +143,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_reduce_f082c.c \
                                 vftr_mpi_reduce_scatter_f082c.c \
                                 vftr_mpi_ireduce_scatter_f082c.c \
                                 vftr_mpi_scan_f082c.c \
+                                vftr_mpi_iscan_f082c.c \
                                 vftr_mpi_exscan_f082c.c
 libvftr_mpi_f082c_la_SOURCES += vftr_mpi_reduce_f082c_f08interface.F90 \
 				vftr_mpi_ireduce_f082c_f08interface.F90 \
@@ -153,6 +154,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_reduce_f082c_f08interface.F90 \
                                 vftr_mpi_reduce_scatter_f082c_f08interface.F90 \
                                 vftr_mpi_ireduce_scatter_f082c_f08interface.F90 \
                                 vftr_mpi_scan_f082c_f08interface.F90 \
+                                vftr_mpi_iscan_f082c_f08interface.F90 \
                                 vftr_mpi_exscan_f082c_f08interface.F90
 
 #############

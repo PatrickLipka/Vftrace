@@ -595,6 +595,8 @@ check_PROGRAMS += reduce \
                   ireduce_scatter_intercom \
                   scan \
                   scan_inplace \
+                  iscan \
+                  iscan_inplace \
                   exscan \
                   exscan_inplace 
 
@@ -702,6 +704,14 @@ scan_inplace_SOURCES = $(srcdir)/scan_inplace.F90
 scan_inplace_FCFLAGS = $(AM_FCFLAGS)
 scan_inplace_LDFLAGS = $(AM_LDFLAGS)
 
+iscan_SOURCES = $(srcdir)/iscan.F90
+iscan_FCFLAGS = $(AM_FCFLAGS)
+iscan_LDFLAGS = $(AM_LDFLAGS)
+
+iscan_inplace_SOURCES = $(srcdir)/iscan_inplace.F90
+iscan_inplace_FCFLAGS = $(AM_FCFLAGS)
+iscan_inplace_LDFLAGS = $(AM_LDFLAGS)
+
 exscan_SOURCES = $(srcdir)/exscan.F90
 exscan_FCFLAGS = $(AM_FCFLAGS)
 exscan_LDFLAGS = $(AM_LDFLAGS)
@@ -736,6 +746,8 @@ dist_noinst_SCRIPTS += reduce.sh \
                        ireduce_scatter_intercom.sh \
                        scan.sh \
                        scan_inplace.sh \
+                       iscan.sh \
+                       iscan_inplace.sh \
                        exscan.sh \
                        exscan_inplace.sh 
 
