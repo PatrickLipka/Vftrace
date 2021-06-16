@@ -773,6 +773,7 @@ check_PROGRAMS += put \
                   accumulate \
                   raccumulate \
                   get_accumulate \
+                  rget_accumulate \
                   fetch_and_op \
                   compare_and_swap
 
@@ -804,6 +805,10 @@ get_accumulate_SOURCES = $(srcdir)/get_accumulate.F90
 get_accumulate_FCFLAGS = $(AM_FCFLAGS)
 get_accumulate_LDFLAGS = $(AM_LDFLAGS)
 
+rget_accumulate_SOURCES = $(srcdir)/rget_accumulate.F90
+rget_accumulate_FCFLAGS = $(AM_FCFLAGS)
+rget_accumulate_LDFLAGS = $(AM_LDFLAGS)
+
 fetch_and_op_SOURCES = $(srcdir)/fetch_and_op.F90
 fetch_and_op_FCFLAGS = $(AM_FCFLAGS)
 fetch_and_op_LDFLAGS = $(AM_LDFLAGS)
@@ -819,6 +824,7 @@ dist_noinst_SCRIPTS += put.sh \
                        accumulate.sh \
                        raccumulate.sh \
                        get_accumulate.sh \
+                       rget_accumulate.sh \
                        fetch_and_op.sh \
                        compare_and_swap.sh
 
