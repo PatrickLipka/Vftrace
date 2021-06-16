@@ -167,6 +167,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_put_f082c.c \
                                 vftr_mpi_get_f082c.c \
                                 vftr_mpi_rget_f082c.c \
                                 vftr_mpi_accumulate_f082c.c \
+                                vftr_mpi_raccumulate_f082c.c \
                                 vftr_mpi_get_accumulate_f082c.c \
                                 vftr_mpi_fetch_and_op_f082c.c \
                                 vftr_mpi_compare_and_swap_f082c.c
@@ -175,6 +176,7 @@ libvftr_mpi_f082c_la_SOURCES += vftr_mpi_put_f082c_f08interface.F90 \
                                 vftr_mpi_get_f082c_f08interface.F90 \
                                 vftr_mpi_rget_f082c_f08interface.F90 \
                                 vftr_mpi_accumulate_f082c_f08interface.F90 \
+                                vftr_mpi_raccumulate_f082c_f08interface.F90 \
                                 vftr_mpi_get_accumulate_f082c_f08interface.F90 \
                                 vftr_mpi_fetch_and_op_f082c_f08interface.F90 \
                                 vftr_mpi_compare_and_swap_f082c_f08interface.F90
