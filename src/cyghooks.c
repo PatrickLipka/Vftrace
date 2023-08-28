@@ -14,7 +14,7 @@ void vftr_set_exit_func_hook(void (*function_ptr)(void*,void*)) {
    vftrace.hooks.function_hooks.exit = function_ptr;
 }
 
-#if defined(__x86_64__) || defined(__ve__)
+#if defined(__x86_64__) || defined(__ve__) || defined(__arm__) || defined(__ARM_ARCH)
 void __cyg_profile_func_enter(void *func, void *call_site) {
    vftrace.hooks.function_hooks.enter(func, call_site);
 }
